@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dbc707be73f24d419bb59679bf9bde3, type: 3}
+  m_Name: NinjaSonic
+  m_EditorClassIdentifier: 
+  playerType: 1
+  isUnlockByPrice: 0
+  price: 0
+  totalUpgrades: 140000001e00000028000000320000003c00000046000000
