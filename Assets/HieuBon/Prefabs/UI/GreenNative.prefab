@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 3067954996001217057}
   - component: {fileID: 3728121587323506606}
   m_Layer: 0
-  m_Name: R
+  m_Name: GreenNative
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -439,12 +439,12 @@ MonoBehaviour:
   sizeOneButton: {x: -44.39, y: 370.47}
   sizeTwoButton: {x: -87.5358, y: 456.7616}
   rectFrameSelect: {fileID: 7981660959549050423}
-  playerInShopData: {fileID: 11400000, guid: 3981b98ad5a2566429ef697a995f58aa, type: 2}
-  indexPlayerLevelData: {fileID: 11400000, guid: 2a762f1f37c376f48b5bfcd317f75277, type: 2}
+  playerInShopData: {fileID: 11400000, guid: f144c8d015b8c8341823471ed88ca75d, type: 2}
+  indexPlayerLevelData: {fileID: 11400000, guid: 4d277548bb53e7042b8526eac5184a54, type: 2}
   inUse: {fileID: 7061905939955336219}
-  level: 1
-  piece: 9999
-  isUnlock: 1
+  level: 0
+  piece: 99
+  isUnlock: 0
   isUnlockByPrice: 0
   price: 0
 --- !u!114 &3067954996001217057

@@ -43,6 +43,9 @@ namespace Hunter
         public AudioClip barXReward;
         public AudioClip pieceReward;
 
+        public AudioClip unlockPlayer;
+        public AudioClip upgradePlayer;
+
         private void Awake()
         {
             instance = this;
@@ -61,7 +64,7 @@ namespace Hunter
 
         public void PlaySoundNVibrate(AudioClip audioClip, int value)
         {
-            //if (!Manager.instance.IsMuteSound) srcSound.PlayOneShot(audioClip);
+            if (GameManager.instance.IsAtiveSound) srcSound.PlayOneShot(audioClip);
             //if (value != 0) Vibration.Vibrate(value);
         }
 

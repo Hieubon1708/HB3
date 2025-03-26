@@ -32,6 +32,7 @@ namespace Hunter
 
         public void OnClickSort()
         {
+            AudioController.instance.PlaySoundNVibrate(AudioController.instance.button, 0);
             DisableFakeEquips();
             isQuality = !isQuality;
             Sort();

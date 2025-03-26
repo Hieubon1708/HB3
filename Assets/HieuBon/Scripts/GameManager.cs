@@ -5,6 +5,7 @@ using static Hunter.GameController;
 using System.Collections.Generic;
 using static Hunter.PlayerInformation;
 using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace Hunter
 {
@@ -18,6 +19,43 @@ namespace Hunter
         {
             instance = this;
             PlayerPrefs.DeleteAll();
+        }
+
+        public bool IsActiveMusic
+        {
+            get
+            {
+                return PlayerPrefs.GetInt("Music", 1) == 1;
+            }
+            set
+            {
+                //AudioController.instance.IsPlayMusic();
+                PlayerPrefs.SetInt("Music", value ? 1 : 0);
+            }
+        }
+
+        public bool IsAtiveSound
+        {
+            get
+            {
+                return PlayerPrefs.GetInt("Sound", 1) == 1;
+            }
+            set
+            {
+                PlayerPrefs.SetInt("Sound", value ? 1 : 0);
+            }
+        }
+
+        public bool IsActiveVibrate
+        {
+            get
+            {
+                return PlayerPrefs.GetInt("Vibrate", 1) == 1;
+            }
+            set
+            {
+                PlayerPrefs.SetInt("Vibrate", value ? 1 : 0);
+            }
         }
 
         public int Level
@@ -79,6 +117,91 @@ namespace Hunter
                 PlayerPrefs.SetInt("CurrentPlayer", (int)value);
             }
         }
+        
+        public PlayerAvatar.AvatarType CurrentAvatar
+        {
+            get
+            {
+                return (PlayerAvatar.AvatarType)PlayerPrefs.GetInt("CurrentAvatar", (int)PlayerAvatar.AvatarType.Avatar1);
+            }
+            set
+            {
+                PlayerPrefs.SetInt("CurrentAvatar", (int)value);
+            }
+        }
+        
+        public PlayerAvatar.FrameType CurrentFrame
+        {
+            get
+            {
+                return (PlayerAvatar.FrameType)PlayerPrefs.GetInt("CurrentFrame", (int)PlayerAvatar.FrameType.Frame1);
+            }
+            set
+            {
+                PlayerPrefs.SetInt("CurrentFrame", (int)value);
+            }
+        }
+
+        public string PlayerName
+        {
+            get
+            {
+                if (!PlayerPrefs.HasKey("PlayerName"))
+                {
+                    return GenerateRandomString(7);
+                }
+                return PlayerPrefs.GetString("PlayerName");
+            }
+            set
+            {
+                PlayerPrefs.SetString("PlayerName", value);
+            }
+        }
+
+        public List<PlayerAvatar.AvatarType> AvatarsUnlock
+        {
+            get
+            {
+                string txt = PlayerPrefs.GetString("AvatarsUnlock", string.Empty);
+                if (!string.IsNullOrEmpty(txt))
+                {
+                    return JsonConvert.DeserializeObject<List<PlayerAvatar.AvatarType>>(txt);
+                }
+
+                List<PlayerAvatar.AvatarType> avatars = new List<PlayerAvatar.AvatarType>();
+
+                avatars.Add(PlayerAvatar.AvatarType.Avatar1);
+
+                return avatars;
+            }
+            set
+            {
+                string txt = JsonConvert.SerializeObject(value);
+                PlayerPrefs.SetString("AvatarsUnlock", txt);
+            }
+        }
+
+        public List<PlayerAvatar.FrameType> FramesUnlock
+        {
+            get
+            {
+                string txt = PlayerPrefs.GetString("FramesUnlock", string.Empty);
+                if (!string.IsNullOrEmpty(txt))
+                {
+                    return JsonConvert.DeserializeObject<List<PlayerAvatar.FrameType>>(txt);
+                }
+                List<PlayerAvatar.FrameType> frames = new List<PlayerAvatar.FrameType>();
+
+                frames.Add(PlayerAvatar.FrameType.Frame1);
+
+                return frames;
+            }
+            set
+            {
+                string txt = JsonConvert.SerializeObject(value);
+                PlayerPrefs.SetString("FramesUnlock", txt);
+            }
+        }
 
         public List<Equip> Equipments
         {
@@ -110,7 +233,7 @@ namespace Hunter
             return new PlayerData();
         }
 
-        
+
         public void SetPlayerData(PlayerData playerData)
         {
             string txt = JsonConvert.SerializeObject(playerData);
@@ -174,5 +297,17 @@ namespace Hunter
 
             return 0;
         }*/
+        public string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder stringBuilder = new StringBuilder(length);
+
+            for (int i = 0; i < length; i++)
+            {
+                stringBuilder.Append(chars[Random.Range(0, chars.Length)]);
+            }
+
+            return stringBuilder.ToString();
+        }
     }
 }

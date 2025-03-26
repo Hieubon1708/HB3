@@ -71,6 +71,7 @@ namespace Hunter
         {
             Megamon,
             NinjaSonic,
+            GreenNative,
             None
         }
 

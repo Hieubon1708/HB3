@@ -69,6 +69,8 @@ namespace Hunter
         [HideInInspector]
         public GameObject playerModel;
 
+        public TextNofication textNofication;
+
         public enum ColorType
         {
             Health, Damage, DamageCrit, Default
@@ -467,6 +469,8 @@ namespace Hunter
             if (inventory.GetTweening(equipSelect.equipType)) return;
             inventory.SetTweening(equipSelect.equipType, true);
 
+            AudioController.instance.PlaySoundNVibrate(AudioController.instance.button, 0);
+
             CurrencyEquipTypeInformation currencyEquipInformation = GetCurrencyEquipInfor(equipSelect.equipType);
 
             AttackAndHealth currentAttackAndHealth = GetCurrentAttackAndHealth();
@@ -577,6 +581,8 @@ namespace Hunter
 
         public void ShowEquip()
         {
+            AudioController.instance.PlaySoundNVibrate(AudioController.instance.button, 0);
+
             if (equipParent.activeSelf) return;
 
             playerModel.transform.rotation = Quaternion.identity;
@@ -598,6 +604,8 @@ namespace Hunter
 
         public void ShowHero()
         {
+            AudioController.instance.PlaySoundNVibrate(AudioController.instance.button, 0);
+
             if (heroParent.activeSelf) return;
 
             playerModel.transform.rotation = Quaternion.identity;

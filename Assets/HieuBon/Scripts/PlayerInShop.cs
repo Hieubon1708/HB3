@@ -101,6 +101,8 @@ namespace Hunter
 
         void OnClick()
         {
+            AudioController.instance.PlaySoundNVibrate(AudioController.instance.button, 0);
+
             bool isUpgradeFull = IsUpgradeFull();
             bool isEnoughPiece = isUpgradeFull ? false : IsEnoughPiece();
 
@@ -195,6 +197,8 @@ namespace Hunter
 
         public void Unlock()
         {
+            AudioController.instance.PlaySoundNVibrate(AudioController.instance.unlockPlayer, 100);
+
             playerData.isUnlocked = true;
             frameUnlock.SetActive(false);
             buttonUnlock.SetActive(false);
@@ -226,6 +230,8 @@ namespace Hunter
 
         public void Use()
         {
+            AudioController.instance.PlaySoundNVibrate(AudioController.instance.button, 0);
+
             PlayerInformation.instance.UpgradePlayerData(PlayerInformation.PlayerUpgradeType.IsUsed, playerInShopData.playerType);
 
             GameManager.instance.CurrentPlayer = playerInShopData.playerType;
@@ -237,6 +243,8 @@ namespace Hunter
 
         public void Upgrade()
         {
+            AudioController.instance.PlaySoundNVibrate(AudioController.instance.upgradePlayer, 75);
+
             playerData.level++;
 
             PlayerInformation.instance.UpgradePlayerData(PlayerInformation.PlayerUpgradeType.Level, playerInShopData.playerType);
