@@ -2387,7 +2387,7 @@ PrefabInstance:
     - target: {fileID: -6000378973559868654, guid: 0187584ce7be1b24699bc92aada5d0e3, type: 3}
       propertyPath: prefab
       value: 
-      objectReference: {fileID: 4370298185386091496, guid: a99151b433dbb1a488dea0d71f591bea, type: 3}
+      objectReference: {fileID: 4370298185386091496, guid: ec9f33a87cca0514cab2162ed6283421, type: 3}
     - target: {fileID: -6000378973559868654, guid: 0187584ce7be1b24699bc92aada5d0e3, type: 3}
       propertyPath: botType
       value: 1

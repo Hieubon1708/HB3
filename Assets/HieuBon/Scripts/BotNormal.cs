@@ -11,7 +11,7 @@ namespace Hunter
             animator.SetTrigger("Aiming");
             animator.SetTrigger("Fire");
             yield return new WaitForSeconds(aiming);
-            while (player.col.enabled)
+            while (player.col.enabled && col.enabled)
             {
                 player.SubtractHp(damage, transform);
                 weapon.Attack(player.transform);

@@ -114,28 +114,6 @@ namespace Hunter
             return true;
         }
 
-        public void AddWeapon(WeaponType weaponType)
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (players[i].weapon == null)
-                {
-                    players[i].LoadWeapon(weaponType);
-                    return;
-                }
-            }
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (players[i].weapon.weaponType == WeaponType.Knife)
-                {
-                    players[i].LoadWeapon(weaponType);
-                    return;
-                }
-            }
-            int indexRandom = Random.Range(0, players.Count);
-            players[indexRandom].LoadWeapon(weaponType);
-        }
-
         public void Play()
         {
             StartBots();
@@ -250,7 +228,7 @@ namespace Hunter
             GameObject p = Instantiate(GameController.instance.prePlayers[(int)playerType], transform);
             Player sc = p.GetComponent<Player>();
             players.Add(sc);
-            sc.LoadWeapon(weaponType);
+            sc.LoadWeapon(playerType, weaponType);
             sc.Init(playerLevel);
             return sc;
         }

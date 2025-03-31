@@ -5,14 +5,15 @@ namespace Hunter
     public class PlayerWeaponEquip : MonoBehaviour
     {
         public GameObject[] preWeapons;
+        public GameObject[] preWeaponsDefault;
 
-        public void Equip(Player player, GameController.WeaponType weaponType)
+        public void Equip(Player player, GameController.PlayerType playerType, GameController.WeaponType weaponType)
         {
             if (player.weapon != null)
             {
                 Destroy(player.weapon.gameObject);
             }
-            GameObject w = GetPreWeaponByIndex((int)weaponType - 1);
+            GameObject w = GetPreWeaponByIndex(playerType, weaponType);
             if (w)
             {
                 GameObject weapon = Instantiate(w, player.hand);
@@ -26,11 +27,18 @@ namespace Hunter
             }
         }
 
-        GameObject GetPreWeaponByIndex(int index)
+        GameObject GetPreWeaponByIndex(GameController.PlayerType playerType, GameController.WeaponType weaponType)
         {
-            for (int i = 0; i < preWeapons.Length; i++)
+            if (weaponType != GameController.WeaponType.Default)
             {
-                if (i == index) return preWeapons[i];
+                for (int i = 0; i < preWeapons.Length; i++)
+                {
+                    if (i == (int)weaponType) return preWeapons[i];
+                }
+            }
+            else
+            {
+                return preWeaponsDefault[(int)playerType];
             }
             return null;
         }

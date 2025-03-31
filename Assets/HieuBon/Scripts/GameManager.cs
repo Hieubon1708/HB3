@@ -19,6 +19,8 @@ namespace Hunter
         {
             instance = this;
             PlayerPrefs.DeleteAll();
+
+            Level = 4;
         }
 
         public bool IsActiveMusic
@@ -82,15 +84,27 @@ namespace Hunter
             }
         }
 
-        public int Weapon
+        public WeaponType Weapon
         {
             get
             {
-                return PlayerPrefs.GetInt("Weapon", 4);
+                return (WeaponType)PlayerPrefs.GetInt("Weapon", (int)WeaponType.Default);
             }
             set
             {
-                PlayerPrefs.SetInt("Weapon", value);
+                PlayerPrefs.SetInt("Weapon", (int)value);
+            }
+        }
+        
+        public int Energy
+        {
+            get
+            {
+                return PlayerPrefs.GetInt("Energy", 30);
+            }
+            set
+            {
+                PlayerPrefs.SetInt("Energy", value);
             }
         }
 
@@ -110,7 +124,7 @@ namespace Hunter
         {
             get
             {
-                return (PlayerType)PlayerPrefs.GetInt("CurrentPlayer", (int)PlayerType.Megamon);
+                return (PlayerType)PlayerPrefs.GetInt("CurrentPlayer", (int)PlayerType.NinjaSonic);
             }
             set
             {

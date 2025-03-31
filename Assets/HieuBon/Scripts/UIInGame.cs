@@ -322,7 +322,7 @@ namespace Hunter
             Win(action, 1.5f);
             PlayerController.instance.Win();
             GameManager.instance.PercentBlood = 100;
-            GameManager.instance.Weapon = 4;
+            GameManager.instance.Weapon = GameController.WeaponType.Default;
             GameManager.instance.FistTimeShowUIWeapon = 0;
         }
 

@@ -9541,6 +9541,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1065379702}
   - {fileID: 5032315873075992410}
   - {fileID: 67976121}
   - {fileID: 2010877805}
@@ -13939,7 +13940,7 @@ Transform:
   m_Children:
   - {fileID: 97145851}
   - {fileID: 901255372}
-  m_Father: {fileID: 1587366046}
+  m_Father: {fileID: 766342349}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1083186452
 GameObject:
@@ -19168,6 +19169,9 @@ MonoBehaviour:
   - {fileID: 1453765142291263, guid: 06f69187cd95e714e8af44fd69d57bf4, type: 3}
   - {fileID: 1753892867835979, guid: 6b46212e65b8a0847b6011cd60bd89f0, type: 3}
   - {fileID: 1314259482442657, guid: 8304f83960896964d826a83df7d9a677, type: 3}
+  preWeaponsDefault:
+  - {fileID: 250889922966228887, guid: b2d62fba524be614dbc55b49fe525d36, type: 3}
+  - {fileID: 3143038252868217583, guid: fb39b260aecd8f741bde34ed5d30511d, type: 3}
 --- !u!1 &1478793479
 GameObject:
   m_ObjectHideFlags: 0
@@ -20135,7 +20139,6 @@ Transform:
   m_Children:
   - {fileID: 1257243736}
   - {fileID: 1607636934}
-  - {fileID: 1065379702}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1587366047
@@ -20152,9 +20155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 0}
   prePlayers:
-  - {fileID: 5387485495956757140, guid: e23644c1a8ba1b0459d51503879c39da, type: 3}
-  - {fileID: 6103249573113573734, guid: efce49ff227ff604abe4dbcf6bff23b0, type: 3}
   - {fileID: 5311355916868839012, guid: b5a98ae005d315b449c4c72d61c0e8d3, type: 3}
+  - {fileID: 6071881017480086602, guid: e2fbdec9ea5f5b7499e4989420c57857, type: 3}
   container: {fileID: 1587366046}
   playerViewContainer: {fileID: 1065379702}
   preFxHealth: {fileID: 140436, guid: de625fbb023d44d45ad5ff7c646e9dae, type: 3}
@@ -22438,6 +22440,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1841007762}
   - component: {fileID: 1841007763}
+  - component: {fileID: 1841007764}
   m_Layer: 5
   m_Name: EnergyBar
   m_TagString: Untagged
@@ -22507,7 +22510,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 598837045}
   m_HandleRect: {fileID: 0}
@@ -22519,6 +22522,21 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1841007764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841007761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1449237e1f597924e9746912475a6a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 1841007763}
+  notEnough: {fileID: 0}
+  textEnergy: {fileID: 961003360}
 --- !u!1 &1864438932
 GameObject:
   m_ObjectHideFlags: 0

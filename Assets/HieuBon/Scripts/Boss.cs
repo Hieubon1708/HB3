@@ -22,7 +22,7 @@ namespace Hunter
             arrow = transform.Find("EnemyArrow").gameObject;
         }
 
-        public void FixedUpdate()
+        public virtual void FixedUpdate()
         {
             if (!col.enabled || !navMeshAgent.enabled) return;
             if (radarView.target != null)

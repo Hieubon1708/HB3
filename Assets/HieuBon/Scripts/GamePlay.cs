@@ -16,7 +16,7 @@ namespace Hunter
         public GameObject frameRemainingEnemy;
         public int tempChapter;
         public int tempStage;
-        public int tempWeapon;
+        public GameController.WeaponType tempWeapon;
         //public StageType tempStageType;
 
         public void Play()
@@ -52,7 +52,7 @@ namespace Hunter
             tempWeapon = GameManager.instance.Weapon;
             //Manager.instance.Stage = 1;
             GameManager.instance.PercentBlood = 0;
-            GameManager.instance.Weapon = 4;
+            GameManager.instance.Weapon = GameController.WeaponType.Knife;
             //Manager.instance.RescuedCharacter = new List<Character>();
         }
 

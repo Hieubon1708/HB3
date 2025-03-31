@@ -33,6 +33,7 @@ namespace Hunter
 
         ParticleSystem fxHealthRegen;
 
+        [HideInInspector]
         public ParticleSystem fxShield;
 
         public void Awake()

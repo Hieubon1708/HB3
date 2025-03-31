@@ -31,6 +31,7 @@ namespace Hunter
 
         public void Start()
         {
+            Init();
         }
 
         public void Init()
@@ -52,14 +53,14 @@ namespace Hunter
 
         public enum WeaponType
         {
-            None,
             AK47,
             Crossbow,
             Silencer,
             Knife,
             Pistol,
             RPG,
-            Shotgun
+            Shotgun,
+            Default
         }
 
         public enum AlertType
@@ -161,7 +162,7 @@ namespace Hunter
         public void InstanceShield(Transform parent, out ParticleSystem particleSystem)
         {
             GameObject shield = Instantiate(preFxShield, parent.position, Quaternion.identity, parent);
-            shield.transform.localPosition = new Vector3(0, 3f, 0);
+            shield.transform.localPosition = new Vector3(0, 3.5f, 0);
             particleSystem = shield.GetComponentInChildren<ParticleSystem>();
         }
     }

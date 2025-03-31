@@ -29,7 +29,7 @@ namespace Hunter
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
-                GameManager.instance.Weapon = index;
+                //GameManager.instance.Weapon = index;
                 index++;
                 if (index == PlayerController.instance.weaponEquip.preWeapons.Length) index = 1;
             }
