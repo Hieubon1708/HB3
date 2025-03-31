@@ -23,6 +23,8 @@ namespace Hunter
 
         int amountShotTime;
 
+        Coroutine lazeDamage;
+
         public void Start()
         {
             bulletLazes = new BulletLaze[amountLaze];
@@ -93,11 +95,10 @@ namespace Hunter
 
                 AudioController.instance.PlaySoundNVibrate(name.Contains("Swat") ? AudioController.instance.ak47Gun : AudioController.instance.laserGun, 0);
 
-                bulletLaze.Init(poppy.transform.position - transform.position, transform);
+                bulletLaze.Init(damage, "Player", poppy.transform.position - transform.position, transform);
 
                 indexBulletLaze++;
                 if (indexBulletLaze == bulletLazes.Length) indexBulletLaze = 0;
-
 
                 yield return new WaitForSeconds(2);
 
@@ -105,7 +106,7 @@ namespace Hunter
             }
             else
             {
-                float VisionAngle = 360f * Mathf.Deg2Rad;
+                float VisionAngle = 270f * Mathf.Deg2Rad;
                 float Currentangle = -VisionAngle / 2;
                 float angleIcrement = VisionAngle / (bulletLazes.Length - 1);
                 float Sine;
@@ -118,12 +119,12 @@ namespace Hunter
 
                     Vector3 dir = (transform.forward * -Cosine) + (transform.right * -Sine);
 
-                    laze.Init(dir, transform);
+                    laze.Init(damage, "Player", dir, transform);
 
                     Currentangle += angleIcrement;
                 }
 
-                yield return new WaitForSeconds(12);
+                yield return new WaitForSeconds(7);
 
                 foreach (var laze in bulletLazes)
                 {
@@ -147,5 +148,7 @@ namespace Hunter
                 pool.Rotate(Vector3.up * Time.deltaTime * 50);
             }
         }
+
+
     }
 }
