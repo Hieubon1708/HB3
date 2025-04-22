@@ -26,6 +26,7 @@ namespace Hunter
         public Image[] iconCharacter;
         public RectTransform[] piece;
         public TextMeshProUGUI[] amountPiece;
+        public GameObject canvas;
 
         private void Awake()
         {

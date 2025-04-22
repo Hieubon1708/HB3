@@ -15,12 +15,12 @@ namespace Hunter
 
         public NavMeshData navMeshData;
 
-        public AlertCamera[] alertCameras;
-        public Laser[] lasers;
-        public Turrel[] turrels;
-        public Barrel[] barrels;
+        public TrapAlertCamera[] alertCameras;
+        public TrapLaser[] lasers;
+        public TrapTurrel[] turrels;
+        public TrapBarrel[] barrels;
         public Door[] doors;
-        public Alarm[] alarms;
+        public TrapAlarm[] alarms;
         public ObjectBroken[] objectBrokens;
 
         public bool isAlert;
@@ -45,19 +45,17 @@ namespace Hunter
             pool.SetParent(transform);
 
             pathInfos = GetComponentsInChildren<PathInfo>();
-            alertCameras = GetComponentsInChildren<AlertCamera>();
-            lasers = GetComponentsInChildren<Laser>();
-            turrels = GetComponentsInChildren<Turrel>();
-            barrels = GetComponentsInChildren<Barrel>();
-            alarms = GetComponentsInChildren<Alarm>();
+            alertCameras = GetComponentsInChildren<TrapAlertCamera>();
+            lasers = GetComponentsInChildren<TrapLaser>();
+            turrels = GetComponentsInChildren<TrapTurrel>();
+            barrels = GetComponentsInChildren<TrapBarrel>();
+            alarms = GetComponentsInChildren<TrapAlarm>();
             objectBrokens = GetComponentsInChildren<ObjectBroken>();
 
             foreach (var pathInfo in pathInfos)
             {
                 pathInfo.Init();
             }
-
-            LoadPlayer();
         }
 
         public void Start()
@@ -65,13 +63,13 @@ namespace Hunter
             InitBots();
             botsReserve = new List<Bot>(bots);
 
-            StartDoor startDoor = GetComponentInChildren<StartDoor>();
+            /*StartDoor startDoor = GetComponentInChildren<StartDoor>();
             UIInGame.instance.LoadUI(startDoor != null);
             if (startDoor != null) StartCoroutine(startDoor.ElevatorMoveUp(players));
             else
             {
                 if (IsBoss()) StartCoroutine(UIInGame.instance.BossIntro());
-            }
+            }*/
         }
 
         public void StopProbes()
@@ -132,7 +130,7 @@ namespace Hunter
             StartProbes();
         }
 
-        public void LoadPlayer()
+        public void LoadPlayer(Vector3 position)
         {
             if (players.Count > 0)
             {
@@ -143,10 +141,10 @@ namespace Hunter
             PlayerType playerType = GameManager.instance.CurrentPlayer;
             int playerLevel = 1;
             WeaponType weaponType = (WeaponType)GameManager.instance.Weapon;
-            AddPlayer(playerLevel, playerType, weaponType);
+            AddPlayer(playerLevel, playerType, weaponType, position);
 
             PlayerController.instance.playerTouchMovement.Init(players[0]);
-            UIInGame.instance.virtualCam.Init(players[0]);
+            UIInGame.instance.virtualCam.Init(players[0].transform);
             players[0].InitPlayer();
         }
 
@@ -199,7 +197,7 @@ namespace Hunter
             return null;
         }
 
-        public Laser GetLaser(GameObject laser)
+        public TrapLaser GetLaser(GameObject laser)
         {
             for (int i = 0; i < lasers.Length; i++)
             {
@@ -211,7 +209,7 @@ namespace Hunter
             return null;
         }
 
-        public AlertCamera GetCamera(GameObject camera)
+        public TrapAlertCamera GetCamera(GameObject camera)
         {
             for (int i = 0; i < alertCameras.Length; i++)
             {
@@ -223,9 +221,9 @@ namespace Hunter
             return null;
         }
 
-        public Player AddPlayer(int playerLevel, PlayerType playerType, WeaponType weaponType)
+        public Player AddPlayer(int playerLevel, PlayerType playerType, WeaponType weaponType, Vector3 position)
         {
-            GameObject p = Instantiate(GameController.instance.prePlayers[(int)playerType], transform);
+            GameObject p = Instantiate(GameController.instance.prePlayers[(int)playerType], position, Quaternion.identity, transform);
             Player sc = p.GetComponent<Player>();
             players.Add(sc);
             sc.LoadWeapon(playerType, weaponType);
@@ -305,7 +303,7 @@ namespace Hunter
             }
         }
 
-        public Barrel GetBarrel(GameObject barrel)
+        public TrapBarrel GetBarrel(GameObject barrel)
         {
             for (int i = 0; i < barrels.Length; i++)
             {

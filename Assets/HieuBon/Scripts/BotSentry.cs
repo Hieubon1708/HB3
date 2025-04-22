@@ -9,9 +9,9 @@ namespace Hunter
     public abstract class BotSentry : Bot
     {
         [HideInInspector]
-        public ListeningDistance listeningDistance;
+        public BotListeningDistance listeningDistance;
         [HideInInspector]
-        public QuestionRotate questionRotate;
+        public BotQuestionRotate questionRotate;
         [HideInInspector]
         public BotHealth health;
 
@@ -37,8 +37,8 @@ namespace Hunter
 
         public override void Awake()
         {
-            listeningDistance = GetComponentInChildren<ListeningDistance>();
-            questionRotate = GetComponentInChildren<QuestionRotate>();
+            listeningDistance = GetComponentInChildren<BotListeningDistance>();
+            questionRotate = GetComponentInChildren<BotQuestionRotate>();
             health = GetComponentInChildren<BotHealth>();
 
             base.Awake();
@@ -253,7 +253,7 @@ namespace Hunter
                 if (LevelController.instance.alertType == GameController.AlertType.Camera)
                 {
                     BridgeController.instance.Debug_Log("Camera báo động");
-                    AlertCamera alertCamera = null;
+                    TrapAlertCamera alertCamera = null;
                     navMeshAgent.destination = target.transform.position;
                     yield return new WaitForFixedUpdate();
                     yield return new WaitForFixedUpdate();
@@ -276,7 +276,7 @@ namespace Hunter
                 else if (LevelController.instance.alertType == GameController.AlertType.Laser)
                 {
                     BridgeController.instance.Debug_Log("Laser báo động");
-                    Laser laser = null;
+                    TrapLaser laser = null;
                     navMeshAgent.destination = target.transform.position;
                     yield return new WaitForFixedUpdate();
                     yield return new WaitForFixedUpdate();

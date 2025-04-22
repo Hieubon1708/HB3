@@ -20,7 +20,7 @@ namespace Hunter
             instance = this;
             PlayerPrefs.DeleteAll();
 
-            Level = 4;
+            Level = 1;
         }
 
         public bool IsActiveMusic
@@ -124,7 +124,7 @@ namespace Hunter
         {
             get
             {
-                return (PlayerType)PlayerPrefs.GetInt("CurrentPlayer", (int)PlayerType.NinjaSonic);
+                return (PlayerType)PlayerPrefs.GetInt("CurrentPlayer", (int)PlayerType.Megamon);
             }
             set
             {

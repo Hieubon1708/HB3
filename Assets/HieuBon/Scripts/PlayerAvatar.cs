@@ -22,8 +22,8 @@ namespace Hunter
 
         public InputField inputField;
 
-        public AvatarFrameInfo[] avatarFrameInfos;
-        public AvatarInfo[] avatarInfos;
+        public UIAvatarFrameInfo[] avatarFrameInfos;
+        public UIAvatarInfo[] avatarInfos;
 
         public Transform containerAvatar;
         public Transform containerAvatarFrame;
@@ -123,8 +123,8 @@ namespace Hunter
             button = GetComponent<Button>();
             button.onClick.AddListener(OnClick);
 
-            avatarFrameInfos = containerAvatarFrame.GetComponentsInChildren<AvatarFrameInfo>();
-            avatarInfos = containerAvatar.GetComponentsInChildren<AvatarInfo>();
+            avatarFrameInfos = containerAvatarFrame.GetComponentsInChildren<UIAvatarFrameInfo>();
+            avatarInfos = containerAvatar.GetComponentsInChildren<UIAvatarInfo>();
         }
 
         void OnClick()

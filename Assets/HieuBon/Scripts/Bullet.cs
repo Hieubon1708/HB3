@@ -28,21 +28,31 @@ namespace Hunter
             trailRenderer = GetComponentInChildren<TrailRenderer>();
         }
 
+        //bullet hide
         public virtual void Init(int damage, string tag, float timeHide, float speed, float angularSpeed, Vector3 startPosition, Vector3 lookAt)
         {
             Init(damage, tag, speed, angularSpeed, startPosition, lookAt);
         }
-        
+
+        //bullet bounce
         public virtual void Init(int damage, string tag, int countBounce, float speed, float angularSpeed, Vector3 startPosition, Vector3 lookAt)
         {
             Init(damage, tag, speed, angularSpeed, startPosition, lookAt);
         }
-        
+
+        //bullet spawn
         public virtual void Init(int damage, string tag, float speed, float angularSpeed, Vector3 startPosition, Vector3 lookAt, float timeSpawn, Bullet[] bulletSpawns)
         {
             Init(damage, tag, speed, angularSpeed, startPosition, lookAt);
         }
 
+        //bullet slough
+        public virtual void Init(int damage, string tag, Vector3 startPosition, Vector3 lookAt, Vector3 targetPosition, float jumpPower, float duration)
+        {
+            Init(damage, tag, speed, angularSpeed, startPosition, lookAt);
+        }
+
+        //default
         public virtual void Init(int damage, string tag, float speed, float angularSpeed, Vector3 startPosition, Vector3 lookAt)
         {
             this.damage = damage;
@@ -56,15 +66,15 @@ namespace Hunter
             transform.position = startPosition;
             transform.LookAt(lookAt);
 
-            trailRenderer.Clear();
+            if (trailRenderer != null) trailRenderer.Clear();
 
             mesh.gameObject.SetActive(true);
             col.enabled = true;
 
-            if(!gameObject.activeSelf) gameObject.SetActive(true);
+            if (!gameObject.activeSelf) gameObject.SetActive(true);
         }
 
-        public void Disable()
+        public virtual void Disable()
         {
             col.enabled = false;
             rb.velocity = Vector3.zero;

@@ -16,7 +16,7 @@ namespace Hunter
         protected int indexPath;
 
         [HideInInspector]
-        public RadarView radarView;
+        public BotRadarView radarView;
         [HideInInspector]
         public Animator animator;
         [HideInInspector]
@@ -61,19 +61,19 @@ namespace Hunter
 
         [HideInInspector]
         public BotWeapon weapon;
-        TextDamage textDamage;
+        UITextDamage textDamage;
 
         ParticleSystem fxPoison;
         ParticleSystem fxBurn;
 
         public virtual void Awake()
         {
-            radarView = GetComponentInChildren<RadarView>();
+            radarView = GetComponentInChildren<BotRadarView>();
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
             pathInfo = GetComponentInChildren<PathInfo>();
             weapon = GetComponentInChildren<BotWeapon>();
-            textDamage = GetComponentInChildren<TextDamage>();
+            textDamage = GetComponentInChildren<UITextDamage>();
             col = GetComponent<CapsuleCollider>();
 
             blood = transform.Find("Blood").GetComponent<ParticleSystem>();
@@ -86,14 +86,14 @@ namespace Hunter
         {
             //damage = (int)(damage * (1 + 0.03f * (Manager.instance.Chapter - 1)));
             this.pathInfo = pathInfo;
-            UpgradeEnemy.MoveSpeed(ref speed);
-            UpgradeEnemy.MoveSpeedDetect(ref detectSpeed);
-            UpgradeEnemy.RotateSpeed(ref rotateSpeed);
-            UpgradeEnemy.RotateSpeedDetect(ref rotateDetectSpeed);
-            UpgradeEnemy.DistanceFinding(ref distanceFinding);
-            UpgradeEnemy.TimeDelayPoint(ref time);
-            UpgradeEnemy.RateOfFire(ref rateOfFire);
-            UpgradeEnemy.BulletSpeed(ref bulletSpeed);
+            BotUpgrade.MoveSpeed(ref speed);
+            BotUpgrade.MoveSpeedDetect(ref detectSpeed);
+            BotUpgrade.RotateSpeed(ref rotateSpeed);
+            BotUpgrade.RotateSpeedDetect(ref rotateDetectSpeed);
+            BotUpgrade.DistanceFinding(ref distanceFinding);
+            BotUpgrade.TimeDelayPoint(ref time);
+            BotUpgrade.RateOfFire(ref rateOfFire);
+            BotUpgrade.BulletSpeed(ref bulletSpeed);
         }
 
         public void StopProbe()
@@ -223,7 +223,7 @@ namespace Hunter
                     coin = Random.Range(4, 9);
                     BridgeController.instance.Debug_Log("Boss " + coin);
                 }
-                else if (this as MiniBoss)
+                else if (this as BotMiniBoss)
                 {
                     coin = Random.Range(3, 6);
                     BridgeController.instance.Debug_Log("MiniBoss " + coin);

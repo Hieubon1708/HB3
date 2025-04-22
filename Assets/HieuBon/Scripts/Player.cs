@@ -53,7 +53,7 @@ namespace Hunter
         [HideInInspector]
         public GetMoney takeMoney;
 
-        TextDamage textDamage;
+        UITextDamage textDamage;
         LayerMask botLayer;
 
         public void Awake()
@@ -64,7 +64,7 @@ namespace Hunter
             col = GetComponent<CapsuleCollider>();
             health = GetComponentInChildren<PlayerHealth>();
             takeMoney = GetComponentInChildren<GetMoney>();
-            textDamage = GetComponentInChildren<TextDamage>();
+            textDamage = GetComponentInChildren<UITextDamage>();
 
             lookAt = gameObject;
 

@@ -32,9 +32,9 @@ namespace Hunter
             cinemachineTransposer = cinemachineCam.GetCinemachineComponent<CinemachineTransposer>();
         }
 
-        public void Init(Player player)
+        public void Init(Transform target)
         {
-            cinemachineCam.Follow = player.transform;
+            cinemachineCam.Follow = target;
         }
 
         private void OnDestroy()

@@ -17,7 +17,7 @@ namespace Hunter
         List<PathInfo> allies;
 
         [HideInInspector]
-        public Lightning[] lightnings;
+        public BotLightning[] lightnings;
 
         [HideInInspector]
         public BulletGlider[] bulletGliders;
@@ -29,11 +29,11 @@ namespace Hunter
 
         public void Start()
         {
-            lightnings = new Lightning[amoutLightning];
+            lightnings = new BotLightning[amoutLightning];
             for (int i = 0; i < amoutLightning; i++)
             {
                 GameObject b = Instantiate(preLightning, LevelController.instance.pool);
-                lightnings[i] = b.GetComponent<Lightning>();
+                lightnings[i] = b.GetComponent<BotLightning>();
                 b.SetActive(false);
             }
             transform.LookAt(PlayerController.instance.transform, Vector3.up);
@@ -77,7 +77,7 @@ namespace Hunter
             for (; i < 6; i++)
             {
                 int index = i;
-                Lightning lightning = lightnings[indexLightning];
+                BotLightning lightning = lightnings[indexLightning];
 
                 DOVirtual.DelayedCall(i * 0.15f, delegate
                 {

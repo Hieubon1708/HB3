@@ -10,7 +10,7 @@ namespace Hunter
         public GameObject arrow;
 
         [HideInInspector]
-        public Health health;
+        public UIHealth health;
 
         public Transform startBullet;
 
@@ -18,7 +18,7 @@ namespace Hunter
         {
             base.Awake();
 
-            health = GetComponentInChildren<Health>();
+            health = GetComponentInChildren<UIHealth>();
             arrow = transform.Find("EnemyArrow").gameObject;
         }
 

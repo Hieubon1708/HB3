@@ -12,13 +12,13 @@ namespace Hunter
         [HideInInspector]
         public Player player;
         public PlayerTouchMovement playerTouchMovement;
-        public HandTutorial handTutorial;
+        public UIHandTutorial handTutorial;
 
         [HideInInspector]
         public GetMoney takeMoney;
         public ClusterDollar[] clusterDollars;
         int indexClusterDollar;
-        public Dictionary<Key, GameObject> keys = new Dictionary<Key, GameObject>();
+        public Dictionary<TrapKey, GameObject> keys = new Dictionary<TrapKey, GameObject>();
         public ParticleSystem fxBum;
 
         public void Awake()
@@ -49,7 +49,7 @@ namespace Hunter
             if (indexClusterDollar == clusterDollars.Length) indexClusterDollar = 0;
         }
 
-        public bool IsKey(Key key)
+        public bool IsKey(TrapKey key)
         {
             if(keys.ContainsKey(key))
             {
@@ -72,7 +72,7 @@ namespace Hunter
             }
         }
 
-        public void SetKey(Key key, GameObject player)
+        public void SetKey(TrapKey key, GameObject player)
         {
             keys.Add(key, player);
         }

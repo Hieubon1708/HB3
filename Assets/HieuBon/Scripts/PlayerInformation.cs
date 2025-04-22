@@ -15,7 +15,7 @@ namespace Hunter
         public static PlayerInformation instance;
 
         [HideInInspector]
-        public Inventory inventory;
+        public UIInventory inventory;
 
         public ButtonHeroAndEquip[] buttonHeroAndEquips;
 
@@ -26,14 +26,14 @@ namespace Hunter
         public GameObject preFramePurple;
         public GameObject preFrameRed;
 
-        public CurrencyEquipTypeInformation currentGlove;
-        public CurrencyEquipTypeInformation currentHat;
-        public CurrencyEquipTypeInformation currentArmor;
-        public CurrencyEquipTypeInformation currentShoe;
-        public CurrencyEquipTypeInformation currentGlass;
-        public CurrencyEquipTypeInformation currentRing;
+        public UICurrencyEquipTypeInformation currentGlove;
+        public UICurrencyEquipTypeInformation currentHat;
+        public UICurrencyEquipTypeInformation currentArmor;
+        public UICurrencyEquipTypeInformation currentShoe;
+        public UICurrencyEquipTypeInformation currentGlass;
+        public UICurrencyEquipTypeInformation currentRing;
 
-        List<EquipInformation> equipInfos = new List<EquipInformation>();
+        List<UIEquipInformation> equipInfos = new List<UIEquipInformation>();
 
         public Color healthColor;
         public Color damageColor;
@@ -57,11 +57,11 @@ namespace Hunter
         List<PlayerData> playerDatas = new List<PlayerData>();
 
         PlayerInShop[] playerInShops;
-        IndexPlayerLevel indexPlayerLevel;
+        UIIndexPlayerLevel indexPlayerLevel;
 
         public EquipData[] equipDatas;
 
-        IndexAttackAndHealth indexAttackAndHealth;
+        UIIndexAttackAndHealth indexAttackAndHealth;
 
         [HideInInspector]
         public bool isDancing;
@@ -158,7 +158,7 @@ namespace Hunter
             return null;
         }
 
-        CurrencyEquipTypeInformation GetCurrencyEquipInfor(EquipType equipType)
+        UICurrencyEquipTypeInformation GetCurrencyEquipInfor(EquipType equipType)
         {
             switch (equipType)
             {
@@ -263,9 +263,9 @@ namespace Hunter
         public void Awake()
         {
             instance = this;
-            inventory = GetComponentInChildren<Inventory>();
-            indexAttackAndHealth = GetComponentInChildren<IndexAttackAndHealth>(true);
-            indexPlayerLevel = GetComponentInChildren<IndexPlayerLevel>(true);
+            inventory = GetComponentInChildren<UIInventory>();
+            indexAttackAndHealth = GetComponentInChildren<UIIndexAttackAndHealth>(true);
+            indexPlayerLevel = GetComponentInChildren<UIIndexPlayerLevel>(true);
             playerInShops = GetComponentsInChildren<PlayerInShop>(true);
         }
 
@@ -308,11 +308,11 @@ namespace Hunter
 
                 GameObject e = Instantiate(preFrame);
 
-                EquipInformation equipInformation = e.GetComponent<EquipInformation>();
+                UIEquipInformation equipInformation = e.GetComponent<UIEquipInformation>();
 
                 equipInfos.Add(equipInformation);
 
-                CurrencyEquipTypeInformation currencyEquipInformation = GetCurrencyEquipInfor(equip.equipType);
+                UICurrencyEquipTypeInformation currencyEquipInformation = GetCurrencyEquipInfor(equip.equipType);
 
                 equipInformation.Init(equip.equipType.ToString(), equip.equipType, equip.qualityLevel, equipInformation.isWeared);
 
@@ -464,18 +464,18 @@ namespace Hunter
             }
         }
 
-        public void SwapEquipCurrency(EquipInformation equipSelect)
+        public void SwapEquipCurrency(UIEquipInformation equipSelect)
         {
             if (inventory.GetTweening(equipSelect.equipType)) return;
             inventory.SetTweening(equipSelect.equipType, true);
 
             AudioController.instance.PlaySoundNVibrate(AudioController.instance.button, 0);
 
-            CurrencyEquipTypeInformation currencyEquipInformation = GetCurrencyEquipInfor(equipSelect.equipType);
+            UICurrencyEquipTypeInformation currencyEquipInformation = GetCurrencyEquipInfor(equipSelect.equipType);
 
             AttackAndHealth currentAttackAndHealth = GetCurrentAttackAndHealth();
 
-            EquipInformation equipFake = inventory.GetFakeEquip(equipSelect.equipType);
+            UIEquipInformation equipFake = inventory.GetFakeEquip(equipSelect.equipType);
             int indexOfFake = equipFake.transform.GetSiblingIndex();
 
             if (equipSelect.isWeared)
@@ -560,7 +560,7 @@ namespace Hunter
             SaveEquips();
         }
 
-        void NotWearing(EquipInformation equipInformation)
+        void NotWearing(UIEquipInformation equipInformation)
         {
             equipInformation.NotWearing();
 
@@ -571,7 +571,7 @@ namespace Hunter
         {
             List<Equip> equips = new List<Equip>();
 
-            foreach (EquipInformation equip in equipInfos)
+            foreach (UIEquipInformation equip in equipInfos)
             {
                 equips.Add(equip.GetEquip());
             }

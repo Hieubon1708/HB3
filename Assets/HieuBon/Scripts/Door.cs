@@ -11,7 +11,7 @@ namespace Hunter
         public ParticleSystem open;
         public ParticleSystem parLock;
         public GameObject door;
-        public Key key;
+        public TrapKey key;
         public NavMeshObstacle obstacle;
 
         public void OpenDoor()
