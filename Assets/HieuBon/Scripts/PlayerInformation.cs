@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-using static Hunter.PlayerInformation;
-using static Hunter.PlayerInShop;
+using static HieuBon.PlayerInformation;
+using static HieuBon.PlayerInShop;
 
-namespace Hunter
+namespace HieuBon
 {
     public class PlayerInformation : MonoBehaviour
     {

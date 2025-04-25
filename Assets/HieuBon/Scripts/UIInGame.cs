@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class UIInGame : MonoBehaviour
     {
@@ -26,18 +26,19 @@ namespace Hunter
         public Image[] iconCharacter;
         public RectTransform[] piece;
         public TextMeshProUGUI[] amountPiece;
-        public GameObject canvas;
+
+        public GameObject navigation;
+        public GameObject uIBattle;
+        public GameObject uIPlayerView;
+        public GameObject uIPlayerInformation;
+
+        public UIHandTutorial handTutorial;
 
         private void Awake()
         {
             instance = this;
 
             gamePlay = GetComponentInChildren<GamePlay>();
-        }
-
-        private void Start()
-        {
-            //EventManager.StartListening(EventVariables.ChooseEquipment, PlayerController.instance.playerTouchMovement.Play);
         }
 
         public void Lose()
@@ -216,8 +217,13 @@ namespace Hunter
         {
             //EventManager.EmitEvent(EventVariables.CountDownShowAdsInGame);
             LevelController.instance.Play();
+
+            navigation.SetActive(false);
+
             virtualCam.CamStartZoom();
+
             gamePlay.Play();
+
             if (boss != null)
             {
                 GameObject h = boss.transform.Find("Health").gameObject;
@@ -230,7 +236,8 @@ namespace Hunter
             gamePlay.LoadUI();
             layerCover.raycastTarget = true;
             virtualCam.ResetCam();
-            PlayerController.instance.playerTouchMovement.HideTouch();
+
+            PlayerController.instance.HideTouch();
 
             /*StageType stageType = GetStageType();
             if (!isElevator && stageType != StageType.StealthBoss)
@@ -246,7 +253,7 @@ namespace Hunter
                 }
                 else
                 {
-                    PlayerController.instance.handTutorial.PlayHand();
+                    UIInGame.instance.handTutorial.PlayHand();
                 }
             }
             else
@@ -255,7 +262,7 @@ namespace Hunter
             }
             gamePlay.frameRemainingEnemy.SetActive(stageType != StageType.StealthBonus);*/
 
-            PlayerController.instance.handTutorial.PlayHand();
+            UIInGame.instance.handTutorial.PlayHand();
         }
 
         /*public StageType GetStageType()
@@ -311,6 +318,30 @@ namespace Hunter
                     //}
                 });
             }*/
+
+            FadeManager.instance.FadeIn(() =>
+            {
+                BridgeController.instance.PlayCount++;
+
+                UnityEvent e = new UnityEvent();
+                e.AddListener(() =>
+                {
+                    GameController.instance.LoadLevel(GameManager.instance.Level);
+
+                    DOVirtual.DelayedCall(0.5f, () =>
+                    {
+                        FadeManager.instance.FadeOut();
+                    });
+                });
+
+                UnityEvent onDone = new UnityEvent();
+                onDone.AddListener(() =>
+                {
+                    BridgeController.instance.PlayCount = 0;
+                });
+
+                BridgeController.instance.ShowInterstitial("stealth_win", e, onDone);
+            });
         }
 
         public void BossEnd()
@@ -332,7 +363,7 @@ namespace Hunter
         public IEnumerator BossIntro()
         {
             layerCover.raycastTarget = true;
-            PlayerController.instance.handTutorial.StopHand();
+            UIInGame.instance.handTutorial.StopHand();
             boss = LevelController.instance.GetBoss();
             yield return new WaitForSeconds(0.5f);
             CinemachineVirtualCamera cam = boss.GetComponentInChildren<CinemachineVirtualCamera>();
@@ -345,23 +376,43 @@ namespace Hunter
                 layerCover.raycastTarget = false;
             });
             //UIManager.instance.ShowUIHome();
-            PlayerController.instance.handTutorial.PlayHand();
+            UIInGame.instance.handTutorial.PlayHand();
+        }
+
+        public void SelectNavi(int index)
+        {
+            Battle(index == 3);
+            Shop(index == 2);
+        }
+
+        public void Battle(bool isActive)
+        {
+            PlayerController.instance.gameObject.SetActive(isActive);
+            GameController.instance.gameObject.SetActive(isActive);
+
+            uIBattle.SetActive(isActive);
+        }
+
+        public void Shop(bool isActive)
+        {
+            uIPlayerInformation.SetActive(isActive);
+            uIPlayerView.SetActive(isActive);
+        }
+
+        public void StartIntro()
+        {
+            navigation.SetActive(false);
+        }
+
+        public void EndIntro()
+        {
+            navigation.SetActive(true);
         }
 
         public void HitEffect()
         {
-            ResetHitEffect();
+            glow.Stop();
             glow.Play();
-        }
-
-        public void HitCancel()
-        {
-            glow.Stop();
-        }
-
-        void ResetHitEffect()
-        {
-            glow.Stop();
         }
     }
 }

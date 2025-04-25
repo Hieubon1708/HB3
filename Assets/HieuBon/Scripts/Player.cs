@@ -2,8 +2,10 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
-namespace Hunter
+namespace HieuBon
 {
     public class Player : MonoBehaviour
     {
@@ -15,7 +17,6 @@ namespace Hunter
         public int armor;
         [HideInInspector]
         public PlayerHealth health;
-
         [HideInInspector]
         public Animator animator;
         [HideInInspector]
@@ -26,32 +27,31 @@ namespace Hunter
         public PlayerIndexes playerIndexes;
 
         public ParticleSystem blood;
-        public CapsuleCollider attackRangeCollider;
         public Transform hand;
 
         [HideInInspector]
         public bool isKilling;
         public Transform hips;
-
         [HideInInspector]
         public Rigidbody[] rbs;
         [HideInInspector]
         public CapsuleCollider col;
         [HideInInspector]
         public PlayerWeapon weapon;
-        public SkinnedMeshRenderer meshRenderer;
+        SkinnedMeshRenderer meshRenderer;
 
         [HideInInspector]
         public List<GameObject> bots = new List<GameObject>();
+
         Tween delayKill;
         Material defaultMaterial;
-        public Outline outline;
+        Outline outline;
 
         [HideInInspector]
         public int amountSmoke;
         LayerMask layerBotAndWall;
         [HideInInspector]
-        public GetMoney takeMoney;
+        public UIReceiveMoney uIReceiveMoney;
 
         UITextDamage textDamage;
         LayerMask botLayer;
@@ -63,8 +63,10 @@ namespace Hunter
             playerIndexes = GetComponent<PlayerIndexes>();
             col = GetComponent<CapsuleCollider>();
             health = GetComponentInChildren<PlayerHealth>();
-            takeMoney = GetComponentInChildren<GetMoney>();
+            uIReceiveMoney = GetComponentInChildren<UIReceiveMoney>();
             textDamage = GetComponentInChildren<UITextDamage>();
+            meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            outline = GetComponentInChildren<Outline>();
 
             lookAt = gameObject;
 
@@ -84,7 +86,6 @@ namespace Hunter
                 rbs = hips.GetComponentsInChildren<Rigidbody>();
                 IsKinematic(true);
             });
-            PlayerController.instance.Init(takeMoney, this);
             playerIndexes.Init(playerLevel);
         }
 
@@ -92,12 +93,11 @@ namespace Hunter
         {
             this.weapon = weapon;
             this.weapon.Init(this);
-            attackRangeCollider.radius = weapon.attackRange;
         }
 
         public void LoadWeapon(GameController.PlayerType playerType, GameController.WeaponType weaponType)
         {
-            PlayerController.instance.weaponEquip.Equip(this, playerType, weaponType);
+            GameController.instance.Equip(this, playerType, weaponType);
         }
 
         Collider[] targets = new Collider[5];
@@ -109,9 +109,9 @@ namespace Hunter
         {
             if (!col.enabled || weapon == null) return;
 
-            int amountEnemy = Physics.OverlapSphereNonAlloc(transform.position, 7.5f, targetsCrawl, botLayer);
+            int amountEnemy = Physics.OverlapSphereNonAlloc(transform.position, 10f, targetsCrawl, botLayer);
 
-            if (amountEnemy > 0)
+            /*if (amountEnemy > 0)
             {
                 if (!isCrawl)
                 {
@@ -126,7 +126,7 @@ namespace Hunter
                     animator.SetTrigger("Run");
                     isCrawl = false;
                 }
-            }
+            }*/
 
             int amountEnemyByWeapon = Physics.OverlapSphereNonAlloc(transform.position, weapon.attackRange, targets, botLayer);
 
@@ -183,7 +183,7 @@ namespace Hunter
                         foreach (var bot in bots)
                         {
                             Bot b = LevelController.instance.GetBot(bot.gameObject);
-                            if (b != null) b.SubtractHp(damage, transform, false);
+                            if (b != null) b.SubtractHp(b.startHp, transform, false);
                         }
 
                         DOVirtual.DelayedCall(0.35f, delegate
@@ -251,7 +251,7 @@ namespace Hunter
         {
             weapon.Die();
             health.gameObject.SetActive(false);
-            PlayerController.instance.IsHasKey(gameObject);
+            LevelController.instance.IsHasKey(gameObject);
             LevelController.instance.RemovePlayer(this);
             delayKill.Kill();
             isKilling = false;
@@ -261,6 +261,9 @@ namespace Hunter
             animator.enabled = false;
             navMeshAgent.enabled = false;
             IsKinematic(false);
+
+            if (killer == null) return;
+
             Vector3 dir = transform.position - killer.position;
             for (int i = 0; i < rbs.Length; i++)
             {

@@ -348,6 +348,7 @@ MonoBehaviour:
   index: 0
   listeningDistance: {fileID: 9094542142095002457}
   questionRotate: {fileID: 5075371656779486279}
+  health: {fileID: 0}
   isFind: 0
   targetTimeOff: 0.6
   target: {fileID: 0}
@@ -372,10 +373,10 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 0
   m_AutoRepath: 0
-  m_Height: 8
+  m_Height: 8.5
   m_BaseOffset: 0.1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
+  m_ObstacleAvoidanceType: 1
 --- !u!136 &3333981338498852915
 CapsuleCollider:
   m_ObjectHideFlags: 0

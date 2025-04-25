@@ -1,7 +1,7 @@
 using ACEPlay.Bridge;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class GameController : MonoBehaviour
     {
@@ -23,6 +23,17 @@ namespace Hunter
         public GameObject preFxPoison;
         public GameObject preFxBurn;
         public GameObject preFxArmor;
+        public GameObject preFxSmoke;
+
+        public GameObject[] preWeapons;
+        public GameObject[] preWeaponsDefault;
+
+        public ReceiveMoney[] receiveMoney;
+        int indexMoney;
+
+        public IsTouch isTouch;
+
+        ParticleSystem fxSmoke;
 
         public void Awake()
         {
@@ -51,6 +62,12 @@ namespace Hunter
             Circle
         }
 
+        public enum IsTouch
+        {
+            Yes,
+            No
+        }
+
         public enum WeaponType
         {
             AK47,
@@ -65,7 +82,8 @@ namespace Hunter
 
         public enum AlertType
         {
-            Camera, Laser
+            Camera,
+            Laser
         }
 
         public enum PlayerType
@@ -103,7 +121,9 @@ namespace Hunter
 
         public enum TextDamageType
         {
-            None, Normal, Crit
+            None, 
+            Normal, 
+            Crit
         }
 
         public void LoadLevel(int level)
@@ -112,7 +132,7 @@ namespace Hunter
             AudioController.instance.ResetAudio();
             BridgeController.instance.Debug_Log(level.ToString());
 
-            PlayerController.instance.ResetFxDollars();
+            GameController.instance.ResetFxDollars();
 
             if (map != null) Destroy(map);
             map = Instantiate(Resources.Load<GameObject>(level.ToString()), container);
@@ -134,7 +154,7 @@ namespace Hunter
                 }
             }
         }
-        
+
         public void ReceiveArmor(Vector3 position)
         {
             Player player = PlayerController.instance.player;
@@ -158,12 +178,74 @@ namespace Hunter
             healthRegen.transform.localPosition = new Vector3(0, 3f, 0);
             particleSystem = healthRegen.GetComponent<ParticleSystem>();
         }
-        
+
         public void InstanceShield(Transform parent, out ParticleSystem particleSystem)
         {
             GameObject shield = Instantiate(preFxShield, parent.position, Quaternion.identity, parent);
             shield.transform.localPosition = new Vector3(0, 3.5f, 0);
             particleSystem = shield.GetComponentInChildren<ParticleSystem>();
+        }
+
+        public void Equip(Player player, GameController.PlayerType playerType, GameController.WeaponType weaponType)
+        {
+            if (player.weapon != null)
+            {
+                Destroy(player.weapon.gameObject);
+            }
+            GameObject w = GetPreWeaponByIndex(playerType, weaponType);
+            if (w)
+            {
+                GameObject weapon = Instantiate(w, player.hand);
+                weapon.transform.localRotation = w.transform.localRotation;
+                weapon.transform.localPosition = w.transform.localPosition;
+                player.InitWeapon(weapon.GetComponent<PlayerWeapon>());
+            }
+        }
+
+        GameObject GetPreWeaponByIndex(GameController.PlayerType playerType, GameController.WeaponType weaponType)
+        {
+            if (weaponType != GameController.WeaponType.Default)
+            {
+                for (int i = 0; i < preWeapons.Length; i++)
+                {
+                    if (i == (int)weaponType) return preWeapons[i];
+                }
+            }
+            else
+            {
+                return preWeaponsDefault[(int)playerType];
+            }
+            return null;
+        }
+
+        public void ResetFxDollars()
+        {
+            for (int i = 0; i < receiveMoney.Length; i++)
+            {
+                receiveMoney[i].ResetFx();
+            }
+        }
+
+        public void FlyMoney(GameObject target, Vector3 startPos, int coin)
+        {
+            ReceiveMoney money = receiveMoney[indexMoney];
+            money.transform.position = startPos;
+            money.gameObject.SetActive(true);
+            money.FlyMoney(target, coin);
+            indexMoney++;
+            if (indexMoney == receiveMoney.Length) indexMoney = 0;
+        }
+
+        public void PlayFxSmoke(Vector3 position)
+        {
+
+            if(fxSmoke == null)
+            {
+                fxSmoke = Instantiate(preFxHealthRegen, container).GetComponent<ParticleSystem>();
+            }
+
+            fxSmoke.transform.position = position;
+            fxSmoke.Play();
         }
     }
 }

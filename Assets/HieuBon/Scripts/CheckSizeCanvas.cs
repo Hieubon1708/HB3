@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class CheckSizeCanvas : MonoBehaviour
     {

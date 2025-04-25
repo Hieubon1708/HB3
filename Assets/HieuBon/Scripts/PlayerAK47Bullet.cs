@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class PlayerAK47Bullet : PlayerBullet
     {

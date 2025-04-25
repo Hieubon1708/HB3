@@ -1,7 +1,7 @@
 using ACEPlay.Bridge;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class BotListeningDistance : MonoBehaviour
     {

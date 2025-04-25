@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class Boss2 : Boss
     {

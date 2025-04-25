@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class EndDoor : MonoBehaviour
     {
@@ -59,7 +59,7 @@ namespace Hunter
                 }
                 PlayerController.instance.player.navMeshAgent.enabled = false;
                 PlayerController.instance.transform.DOMoveY(PlayerController.instance.transform.position.y + 10, 1f);
-                UIInGame.instance.virtualCam.ElevatorMoveUp(1f);
+                //UIInGame.instance.virtualCam.ElevatorMoveUp(1f);
                 UIInGame.instance.ChangeMap();
             };
             UIInGame.instance.Win(action, 0f);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public abstract class BotWeapon : MonoBehaviour
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
-namespace Hunter
+namespace HieuBon
 {
     public class UIEnergy : MonoBehaviour
     {

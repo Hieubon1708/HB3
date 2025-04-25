@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class RPGBot : Bot
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class BulletLaze : MonoBehaviour
     {

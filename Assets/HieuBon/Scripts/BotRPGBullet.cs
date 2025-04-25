@@ -2,7 +2,7 @@ using DG.Tweening;
 using System;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class BotRPGBullet : MonoBehaviour
     {

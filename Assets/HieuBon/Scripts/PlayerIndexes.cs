@@ -1,8 +1,8 @@
 ﻿using DG.Tweening;
 using UnityEngine;
-using static Hunter.GameController;
+using static HieuBon.GameController;
 
-namespace Hunter
+namespace HieuBon
 {
     public class PlayerIndexes : MonoBehaviour
     {

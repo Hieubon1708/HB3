@@ -2,7 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class ShotgunBot : BotSniper
     {

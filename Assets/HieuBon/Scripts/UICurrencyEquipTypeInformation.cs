@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class UICurrencyEquipTypeInformation : MonoBehaviour
     {

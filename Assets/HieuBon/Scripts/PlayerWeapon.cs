@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Animations;
 
-namespace Hunter
+namespace HieuBon
 {
     public abstract class PlayerWeapon : MonoBehaviour
     {

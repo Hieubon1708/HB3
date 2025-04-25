@@ -1,7 +1,7 @@
 using TigerForge;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class QC : MonoBehaviour
     {
@@ -31,7 +31,7 @@ namespace Hunter
             {
                 //GameManager.instance.Weapon = index;
                 index++;
-                if (index == PlayerController.instance.weaponEquip.preWeapons.Length) index = 1;
+                if (index == GameController.instance.preWeapons.Length) index = 1;
             }
             if (Input.GetKeyDown(KeyCode.W))
             {

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Hunter
+namespace HieuBon
 {
     public abstract class Bot : MonoBehaviour
     {
@@ -237,7 +237,7 @@ namespace Hunter
 
                 if (player != null)
                 {
-                    PlayerController.instance.PlayDollars(player.gameObject, new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z), coin);
+                    GameController.instance.FlyMoney(player.gameObject, new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z), coin);
                 }
 
                 if (!(this as Boss))

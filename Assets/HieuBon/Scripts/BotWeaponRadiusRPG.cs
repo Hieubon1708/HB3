@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class BotWeaponRadiusRPG : MonoBehaviour
     {

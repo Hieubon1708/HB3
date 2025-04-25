@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class PlayerHealth : MonoBehaviour
     {
@@ -75,12 +75,6 @@ namespace Hunter
             armorDamagerBar.DOComplete();
             armorBar.DOFillAmount((float)player.armor / player.startHp, 0.25f);
             armorDamagerBar.DOFillAmount((float)player.armor / player.startHp, 0.25f);
-        }
-
-        public void DelayHideHealth()
-        {
-            /*CancelInvoke(nameof(Hide));
-            Invoke(nameof(Hide), 3f);*/
         }
 
         private void OnDestroy()

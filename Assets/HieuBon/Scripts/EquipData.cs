@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Hunter.PlayerInformation;
+using static HieuBon.PlayerInformation;
 
-namespace Hunter
+namespace HieuBon
 {
     [CreateAssetMenu(fileName = "EquipData", menuName = "ScriptableObjects/EquipData")]
     public class EquipData : ScriptableObject

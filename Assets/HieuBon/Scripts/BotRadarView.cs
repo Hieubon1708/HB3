@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public sealed class BotRadarView : MonoBehaviour
     {

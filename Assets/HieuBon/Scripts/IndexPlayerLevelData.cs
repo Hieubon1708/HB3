@@ -1,9 +1,9 @@
-using Hunter;
+using HieuBon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     [CreateAssetMenu(fileName = "PlayerTextLevelData", menuName = "ScriptableObjects/PlayerTextLevelData")]
     public class IndexPlayerLevelData : ScriptableObject

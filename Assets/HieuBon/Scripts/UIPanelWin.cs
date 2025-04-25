@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class UIPanelWin : MonoBehaviour
     {

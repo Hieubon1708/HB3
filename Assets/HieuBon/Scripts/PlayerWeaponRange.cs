@@ -2,7 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 
-namespace Hunter
+namespace HieuBon
 {
     public class PlayerWeaponRange : PlayerWeapon
     {

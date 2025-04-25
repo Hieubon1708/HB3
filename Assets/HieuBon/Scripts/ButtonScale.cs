@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Hunter
+namespace HieuBon
 {
     public class ButtonScale : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class UITextDamage : MonoBehaviour
     {
@@ -54,7 +54,7 @@ namespace Hunter
 
         public void Update()
         {
-            //textParent.position = UIInGame.instance.virtualCam.cam.WorldToScreenPoint(target.position);
+            textParent.position = UIInGame.instance.virtualCam.cam.WorldToScreenPoint(target.position);
         }
 
         public void ShowDamage(int damage)

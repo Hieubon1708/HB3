@@ -3,36 +3,49 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
-using static Hunter.GameController;
+using static HieuBon.GameController;
 
-namespace Hunter
+namespace HieuBon
 {
     public class LevelController : MonoBehaviour
     {
         public static LevelController instance;
 
+        [HideInInspector]
         public Transform pool;
 
         public NavMeshData navMeshData;
 
+        [HideInInspector]
         public TrapAlertCamera[] alertCameras;
+        [HideInInspector]
         public TrapLaser[] lasers;
+        [HideInInspector]
         public TrapTurrel[] turrels;
+        [HideInInspector]
         public TrapBarrel[] barrels;
+        [HideInInspector]
         public Door[] doors;
+        [HideInInspector]
         public TrapAlarm[] alarms;
+        [HideInInspector]
         public ObjectBroken[] objectBrokens;
-
+        [HideInInspector]
         public bool isAlert;
-
+        [HideInInspector]
         public PathInfo[] pathInfos;
-
+        [HideInInspector]
         public List<Bot> bots;
+        [HideInInspector]
         public List<Bot> botsReserve;
-
+        [HideInInspector]
         public List<Player> players;
-
+        [HideInInspector]
         public AlertType alertType;
+        [HideInInspector]
+        public List<Hostage> hostages;
+
+        public Dictionary<TrapKey, GameObject> keys = new Dictionary<TrapKey, GameObject>();
 
         public void Awake()
         {
@@ -56,6 +69,8 @@ namespace Hunter
             {
                 pathInfo.Init();
             }
+
+            if(GameManager.instance.Level != 1) LoadPlayer(Vector3.zero);
         }
 
         public void Start()
@@ -143,7 +158,6 @@ namespace Hunter
             WeaponType weaponType = (WeaponType)GameManager.instance.Weapon;
             AddPlayer(playerLevel, playerType, weaponType, position);
 
-            PlayerController.instance.playerTouchMovement.Init(players[0]);
             UIInGame.instance.virtualCam.Init(players[0].transform);
             players[0].InitPlayer();
         }
@@ -371,6 +385,34 @@ namespace Hunter
             {
                 alarms[i].StopAlert();
             }
+        }
+
+        public bool IsKey(TrapKey key)
+        {
+            if (keys.ContainsKey(key))
+            {
+                keys.Remove(key);
+                return true;
+            }
+            return false;
+        }
+
+        public void IsHasKey(GameObject value)
+        {
+            foreach (var item in keys)
+            {
+                if (item.Value == value)
+                {
+                    item.Key.ResetKey();
+                    keys.Remove(item.Key);
+                    return;
+                }
+            }
+        }
+
+        public void SetKey(TrapKey key, GameObject player)
+        {
+            keys.Add(key, player);
         }
     }
 }

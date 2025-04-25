@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-namespace Hunter
+namespace HieuBon
 {
     public class BikeEvent : MonoBehaviour
     {
         public Animator characterAnimator;
         public Transform bike;
         public Transform hips;
+        public Animation ani;
 
         public void Jump()
         {
@@ -19,8 +20,9 @@ namespace Hunter
 
         void Start()
         {
+            ani.Play();
             UIInGame.instance.virtualCam.Init(hips);
-
+            UIInGame.instance.virtualCam.cinemachineCam.m_Lens.FieldOfView = 12.452f;
         }
     }
 }

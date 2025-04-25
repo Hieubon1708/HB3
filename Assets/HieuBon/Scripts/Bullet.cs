@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class Bullet : MonoBehaviour
     {
@@ -19,6 +19,11 @@ namespace Hunter
         protected MeshRenderer mesh;
         protected float speed;
         protected float angularSpeed;
+
+        [HideInInspector]
+        public bool isPoison;
+
+        protected Coroutine poison;
 
         public virtual void Awake()
         {
@@ -80,6 +85,11 @@ namespace Hunter
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             mesh.gameObject.SetActive(false);
+
+            if (isPoison)
+            {
+                StartPoison(5);
+            }
         }
 
         public virtual void OnTriggerEnter(Collider other)
@@ -90,7 +100,6 @@ namespace Hunter
 
                 if (targetTag == "Player")
                 {
-                    Debug.Log(col.enabled);
                     Player player = LevelController.instance.GetPlayer(other.gameObject);
                     if (player != null)
                     {
@@ -110,6 +119,34 @@ namespace Hunter
             {
                 Disable();
             }
+        }
+
+        IEnumerator Poison(int damage)
+        {
+            float time = 5f;
+
+            Player player = PlayerController.instance.player;
+
+            while (player.hp > 0 && time > 0)
+            {
+                yield return new WaitForSeconds(0.25f);
+                player.SubtractHp(damage, null);
+                time -= 0.25f;
+            }
+        }
+
+        public void StopPoison()
+        {
+            if (poison != null)
+            {
+                StopCoroutine(poison);
+                poison = null;
+            }
+        }
+
+        public void StartPoison(int damage)
+        {
+            if (poison == null) poison = StartCoroutine(Poison(damage));
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public abstract class BotSentry : Bot
     {
@@ -401,9 +401,11 @@ namespace Hunter
         {
             if (this.hp <= 0) return;
 
+            if (!isFind) hp *= 2;
+
             base.SubtractHp(hp, killer, isOnlyBurn);
 
-            if(!isOnlyBurn)
+            if (!isOnlyBurn)
             {
                 PlayBlood();
                 StopProbe();
@@ -419,7 +421,7 @@ namespace Hunter
             {
                 StopDodging();
 
-                if(fxStun != null && fxStun.isPlaying) fxStun.Stop();
+                if (fxStun != null && fxStun.isPlaying) fxStun.Stop();
 
                 health.gameObject.SetActive(false);
 
@@ -450,7 +452,7 @@ namespace Hunter
             }
             else
             {
-                if(!isOnlyBurn)
+                if (!isOnlyBurn)
                 {
                     AudioController.instance.PlaySoundNVibrate(AudioController.instance.enemyDamage, 50);
                     StartDodging(killer);
@@ -464,7 +466,7 @@ namespace Hunter
 
         void Stun()
         {
-            if(fxStun == null)
+            if (fxStun == null)
             {
                 fxStun = Instantiate(GameController.instance.preFxStun, transform).GetComponentInChildren<ParticleSystem>();
             }

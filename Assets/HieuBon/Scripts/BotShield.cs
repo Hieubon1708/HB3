@@ -2,7 +2,7 @@ using ACEPlay.Bridge;
 using System.Collections;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class BotShield : BotSentry
     {

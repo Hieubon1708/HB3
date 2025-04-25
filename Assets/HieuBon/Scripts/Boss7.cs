@@ -1,9 +1,10 @@
 using ACEPlay.Bridge;
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class Boss7 : Boss
     {
@@ -23,6 +24,8 @@ namespace Hunter
         [HideInInspector]
         public int indexBulletBounce;
 
+        bool isSlough;
+
         public void Start()
         {
             bulletSloughs = new BulletSlough[amountSlough];
@@ -40,6 +43,11 @@ namespace Hunter
                 b.SetActive(false);
             }
             transform.LookAt(PlayerController.instance.transform, Vector3.up);
+
+            DOVirtual.DelayedCall(10f, null).OnStepComplete(delegate
+            {
+                isSlough = !isSlough;
+            });
         }
 
         public override IEnumerator Attack(GameObject poppy)
@@ -53,14 +61,24 @@ namespace Hunter
 
             AudioController.instance.PlaySoundNVibrate(name.Contains("Swat") ? AudioController.instance.ak47Gun : AudioController.instance.laserGun, 0);
 
-            Vector3 lookAt = new Vector3(poppy.transform.position.x, bulletBounces[indexBulletBounce].transform.position.y, poppy.transform.position.z);
+            Vector3 lookAt = new Vector3(poppy.transform.position.x, bulletSloughs[indexBulletSlough].transform.position.y, poppy.transform.position.z);
 
-            //bulletBounces[indexBulletBounce].Init(damage, "Player", 5, 0, startBullet.position, lookAt, 1, bulletBounces);
+            if (!isSlough)
+            {
+                bulletSloughs[indexBulletSlough].Init(damage, "Player", startBullet.position, lookAt, poppy.transform.position, 5, 1f);
 
-            indexBulletBounce++;
-            if (indexBulletBounce == bulletBounces.Length) indexBulletBounce = 0;
+                indexBulletSlough++;
+                if (indexBulletSlough == bulletSloughs.Length) indexBulletSlough = 0;
+            }
+            else
+            {
+                bulletBounces[indexBulletBounce].Init(damage, "Player", 2, 5, 0, transform.position, transform.position + transform.forward * 5);
 
-            yield return new WaitForSeconds(2);
+                indexBulletBounce++;
+                if (indexBulletBounce == bulletBounces.Length) indexBulletBounce = 0;
+            }
+
+            yield return new WaitForSeconds(1.5f); 
 
             StopAttack();
         }
@@ -69,7 +87,7 @@ namespace Hunter
         {
             if(Input.GetKeyDown(KeyCode.S))
             {
-
+                StartCoroutine(Attack(PlayerController.instance.gameObject));
             }
         }
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public abstract class Boss : Bot
     {
@@ -74,14 +74,15 @@ namespace Hunter
             health.SubtractHp();
             if (this.hp <= 0)
             {
-                Debug.Log("ASdad");
-
                 LevelController.instance.StopProbes();
                 AudioController.instance.PlaySoundNVibrate(AudioController.instance.enemyDie, 0);
                 UIInGame.instance.camAni.Play("CamBossZoom");
-                PlayerController.instance.playerTouchMovement.HandleLoseFinger();
+
+                PlayerController.instance.Win();
+
                 UIInGame.instance.layerCover.raycastTarget = true;
                 UIInGame.instance.HitEffect();
+
                 col.enabled = false;
                 animator.enabled = false;
                 navMeshAgent.enabled = false;

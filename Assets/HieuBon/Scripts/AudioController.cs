@@ -1,7 +1,7 @@
 using TigerForge;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class AudioController : MonoBehaviour
     {
@@ -42,6 +42,7 @@ namespace Hunter
         public AudioClip lose;
         public AudioClip barXReward;
         public AudioClip pieceReward;
+        public AudioClip transformation;
 
         public AudioClip unlockPlayer;
         public AudioClip upgradePlayer;

@@ -2,7 +2,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class Cam : MonoBehaviour
     {
@@ -51,10 +51,7 @@ namespace Hunter
 
         public void CamStartZoom()
         {
-            DOVirtual.Float(cinemachineCam.m_Lens.FieldOfView, defaultSize2, time, (v) =>
-            {
-                cinemachineCam.m_Lens.FieldOfView = v;
-            });
+            CamZoom(defaultSize2, time);
             DOVirtual.Float(cinemachineTransposer.m_FollowOffset.z, y2, time, (y) =>
             {
                 cinemachineTransposer.m_FollowOffset = new Vector3(cinemachineTransposer.m_FollowOffset.x, cinemachineTransposer.m_FollowOffset.y, y);
@@ -80,17 +77,17 @@ namespace Hunter
             StopShake();
         }
 
-        public void ShakeCancel()
+        public void CamZoom(float end, float duration)
         {
-            CancelInvoke(nameof(StartShakeCam));
-        }
-
-        public void ElevatorMoveUp(float time)
-        {
-            camEnd = DOVirtual.Float(cinemachineCam.m_Lens.FieldOfView, elevator, time, (v) =>
+            camEnd = DOVirtual.Float(cinemachineCam.m_Lens.FieldOfView, end, duration, (v) =>
             {
                 cinemachineCam.m_Lens.FieldOfView = v;
             });
+        }
+
+        public void ShakeCancel()
+        {
+            CancelInvoke(nameof(StartShakeCam));
         }
     }
 }

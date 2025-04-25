@@ -2026,6 +2026,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1553230168029105333}
     m_Modifications:
+    - target: {fileID: -6502659325172093786, guid: c920a2e7b46a3884c845c293ac5db65c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6209445415403802294, guid: c920a2e7b46a3884c845c293ac5db65c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4968139318831887292, guid: 1c5f4fd0f1a8e0743ad1ab5ce41c99af, type: 3}
       propertyPath: m_Name
       value: Elevator_start_miami
@@ -2069,14 +2077,6 @@ PrefabInstance:
     - target: {fileID: 6596628386578892906, guid: 1c5f4fd0f1a8e0743ad1ab5ce41c99af, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -6502659325172093786, guid: c920a2e7b46a3884c845c293ac5db65c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -6209445415403802294, guid: c920a2e7b46a3884c845c293ac5db65c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2387,7 +2387,7 @@ PrefabInstance:
     - target: {fileID: -6000378973559868654, guid: 0187584ce7be1b24699bc92aada5d0e3, type: 3}
       propertyPath: prefab
       value: 
-      objectReference: {fileID: 4370298185386091496, guid: ec9f33a87cca0514cab2162ed6283421, type: 3}
+      objectReference: {fileID: 4370298185386091496, guid: f2799bd0e5d614c4c80926bb2a82681c, type: 3}
     - target: {fileID: -6000378973559868654, guid: 0187584ce7be1b24699bc92aada5d0e3, type: 3}
       propertyPath: botType
       value: 1

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     [CreateAssetMenu(fileName = "PlayerIndexesData", menuName = "ScriptableObjects/PlayerIndexesData")]
     public class PlayerIndexesData : ScriptableObject

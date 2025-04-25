@@ -4,11 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class Intro1 : MonoBehaviour
     {
         public GameObject map;
+
+        public void Start()
+        {
+            UIInGame.instance.StartIntro();
+        }
 
         public void SceneChange()
         {
@@ -16,6 +21,7 @@ namespace Hunter
             {
                 gameObject.SetActive(false);
                 map.SetActive(true);
+
                 UIInGame.instance.layerCover.DOFade(0f, 0.5f).SetUpdate(true);
             }).SetUpdate(true);
         }

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class PlayerWeaponMelee : PlayerWeapon
     {

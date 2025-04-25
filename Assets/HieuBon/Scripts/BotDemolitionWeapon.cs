@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class BotDemolitionWeapon : BotWeapon
     {

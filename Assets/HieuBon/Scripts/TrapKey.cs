@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class TrapKey : MonoBehaviour
     {
@@ -46,7 +46,7 @@ namespace Hunter
 
                 col.enabled = false;
 
-                PlayerController.instance.SetKey(this, other.gameObject);
+                LevelController.instance.SetKey(this, other.gameObject);
             }
         }
 

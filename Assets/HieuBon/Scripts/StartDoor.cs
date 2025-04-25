@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hunter
+namespace HieuBon
 {
     public class StartDoor : MonoBehaviour
     {
@@ -28,7 +28,7 @@ namespace Hunter
             playerController.position = Vector3.zero;
             playerController.DOKill();
             float startY = playerController.localPosition.y;
-            PlayerController.instance.handTutorial.Hide();
+            UIInGame.instance.handTutorial.Hide();
             PlayerController.instance.player.navMeshAgent.enabled = false;
             playerController.localPosition = new Vector3(playerController.localPosition.x, playerController.localPosition.y - 10, playerController.localPosition.z);
             for (int i = 0; i < players.Count; i++)
@@ -55,7 +55,7 @@ namespace Hunter
                 if (LevelController.instance.IsBoss()) StartCoroutine(UIInGame.instance.BossIntro());
                 else
                 {
-                    PlayerController.instance.handTutorial.PlayHand();
+                    UIInGame.instance.handTutorial.PlayHand();
                     //UIManager.instance.ShowUIHome();
                     DOVirtual.DelayedCall(0.5f, delegate
                     {

@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class Door : MonoBehaviour
     {
@@ -13,6 +13,16 @@ namespace Hunter
         public GameObject door;
         public TrapKey key;
         public NavMeshObstacle obstacle;
+
+        private void Start()
+        {
+            foreach (var l in locks)
+            {
+                l.gameObject.SetActive(true);
+            }
+
+            door.SetActive(true);
+        }
 
         public void OpenDoor()
         {
@@ -29,7 +39,7 @@ namespace Hunter
         {
             if (other.CompareTag("Player"))
             {
-                if (PlayerController.instance.IsKey(key))
+                if (LevelController.instance.IsKey(key))
                 {
                     AudioController.instance.PlaySoundNVibrate(AudioController.instance.openDoor, 0);
                     OpenDoor();

@@ -1,13 +1,13 @@
 using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
-using static Hunter.GameController;
+using static HieuBon.GameController;
 using System.Collections.Generic;
-using static Hunter.PlayerInformation;
+using static HieuBon.PlayerInformation;
 using Newtonsoft.Json.Linq;
 using System.Text;
 
-namespace Hunter
+namespace HieuBon
 {
     public class GameManager : MonoBehaviour
     {
@@ -20,7 +20,7 @@ namespace Hunter
             instance = this;
             PlayerPrefs.DeleteAll();
 
-            Level = 1;
+            Level = 3;
         }
 
         public bool IsActiveMusic

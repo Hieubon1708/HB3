@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hunter
+namespace HieuBon
 {
     public class PlayerInShop : MonoBehaviour
     {

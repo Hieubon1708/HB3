@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Hunter
+namespace HieuBon
 {
     public class GamePlay : MonoBehaviour
     {
@@ -14,8 +14,12 @@ namespace Hunter
         public GameObject panelLose;
         public GameObject panelWin;
         public GameObject frameRemainingEnemy;
+
+        [HideInInspector]
         public int tempChapter;
+        [HideInInspector]
         public int tempStage;
+        [HideInInspector]
         public GameController.WeaponType tempWeapon;
         //public StageType tempStageType;
 
@@ -87,7 +91,7 @@ namespace Hunter
             //EventManager.SetDataGroup(EventVariables.UpdateMission, MissionType.CollectMoney, coin);
             //EventManager.EmitEvent(EventVariables.UpdateMission);
             BridgeController.instance.LogEarnCurrency("money", coin, "kill_and_ground_stealk");
-            PlayerController.instance.takeMoney.TakeOn(coin);
+            PlayerController.instance.uIReceiveMoney.TakeOn(coin);
             AudioController.instance.PlaySoundNVibrate(AudioController.instance.coin, 0);
             //UIEconomy.instance.AddCash(coin);
         }
