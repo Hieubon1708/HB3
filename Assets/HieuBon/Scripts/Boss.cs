@@ -63,7 +63,7 @@ namespace HieuBon
             }
         }
 
-        public override void SubtractHp(int hp, Transform killer, bool isOnlyBurn)
+        public override void SubtractHp(int hp, Transform killer, bool isBurnOrPoison = false, bool isReceiveMoney = true)
         {
             if (this.hp <= 0 || PlayerController.instance.player.hp <= 0) return;
 
@@ -78,9 +78,8 @@ namespace HieuBon
                 AudioController.instance.PlaySoundNVibrate(AudioController.instance.enemyDie, 0);
                 UIInGame.instance.camAni.Play("CamBossZoom");
 
-                PlayerController.instance.Win();
+                PlayerController.instance.HideTouch();
 
-                UIInGame.instance.layerCover.raycastTarget = true;
                 UIInGame.instance.HitEffect();
 
                 col.enabled = false;

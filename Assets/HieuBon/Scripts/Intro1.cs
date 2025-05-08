@@ -17,13 +17,8 @@ namespace HieuBon
 
         public void SceneChange()
         {
-            UIInGame.instance.layerCover.DOFade(1f, 0.5f).OnComplete(delegate
-            {
-                gameObject.SetActive(false);
-                map.SetActive(true);
-
-                UIInGame.instance.layerCover.DOFade(0f, 0.5f).SetUpdate(true);
-            }).SetUpdate(true);
+            gameObject.SetActive(false);
+            map.SetActive(true);
         }
     }
 }

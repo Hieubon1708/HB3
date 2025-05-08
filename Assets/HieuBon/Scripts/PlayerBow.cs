@@ -25,7 +25,6 @@ namespace HieuBon
 
             parWeapon.Play();
             AudioController.instance.PlaySoundNVibrate(AudioController.instance.crossBow, 0);
-            player.ChangeLookAt();
 
             bullets[indexBullet].gameObject.SetActive(false);
             bullets[indexBullet].rb.velocity = Vector3.zero;

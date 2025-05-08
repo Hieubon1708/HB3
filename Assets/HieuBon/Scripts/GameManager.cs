@@ -13,6 +13,8 @@ namespace HieuBon
     {
         public static GameManager instance;
 
+        public int level;
+
         public PlayerIndexes characterDataSO;
 
         private void Awake()
@@ -20,7 +22,7 @@ namespace HieuBon
             instance = this;
             PlayerPrefs.DeleteAll();
 
-            Level = 3;
+            Level = level;
         }
 
         public bool IsActiveMusic

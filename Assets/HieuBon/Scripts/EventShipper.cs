@@ -22,7 +22,6 @@ namespace HieuBon
             }).SetUpdate(true).OnComplete(delegate
             {
                 UIInGame.instance.LoadUI(false);
-                UIInGame.instance.EndIntro();
             });
         }
 

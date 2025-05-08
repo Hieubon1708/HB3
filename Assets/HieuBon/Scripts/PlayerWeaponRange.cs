@@ -44,7 +44,6 @@ namespace HieuBon
                 {
                     bot.SubtractHp(100, PlayerController.instance.player.transform, false);
                 }
-                player.ChangeLookAt();
                 col.enabled = false;
                 laser1.DOFade(0, 0f);
                 PlayerController.instance.player.navMeshAgent.speed *= 2;

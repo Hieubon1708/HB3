@@ -22,8 +22,6 @@ namespace HieuBon
         [HideInInspector]
         public NavMeshAgent navMeshAgent;
         [HideInInspector]
-        public GameObject lookAt;
-        [HideInInspector]
         public PlayerIndexes playerIndexes;
 
         public ParticleSystem blood;
@@ -45,7 +43,9 @@ namespace HieuBon
 
         Tween delayKill;
         Material defaultMaterial;
-        Outline outline;
+
+        [HideInInspector]
+        public Outline outline;
 
         [HideInInspector]
         public int amountSmoke;
@@ -55,6 +55,8 @@ namespace HieuBon
 
         UITextDamage textDamage;
         LayerMask botLayer;
+
+        public Transform root;
 
         public void Awake()
         {
@@ -67,8 +69,6 @@ namespace HieuBon
             textDamage = GetComponentInChildren<UITextDamage>();
             meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             outline = GetComponentInChildren<Outline>();
-
-            lookAt = gameObject;
 
             botLayer = LayerMask.GetMask("Bot");
         }
@@ -111,7 +111,7 @@ namespace HieuBon
 
             int amountEnemy = Physics.OverlapSphereNonAlloc(transform.position, 10f, targetsCrawl, botLayer);
 
-            /*if (amountEnemy > 0)
+            if (amountEnemy > 0)
             {
                 if (!isCrawl)
                 {
@@ -126,7 +126,7 @@ namespace HieuBon
                     animator.SetTrigger("Run");
                     isCrawl = false;
                 }
-            }*/
+            }
 
             int amountEnemyByWeapon = Physics.OverlapSphereNonAlloc(transform.position, weapon.attackRange, targets, botLayer);
 
@@ -166,19 +166,11 @@ namespace HieuBon
                         PlayerController.instance.player.playerIndexes.Combo(ref damage);
                     }
 
-                    lookAt = targets[0].gameObject;
-
                     animator.SetTrigger("Hit");
 
-                    PlayerController.instance.player.navMeshAgent.speed /= 3;
-
-                    delayKill = DOVirtual.DelayedCall(0.35f, delegate
+                    delayKill = DOVirtual.DelayedCall(0.375f, delegate
                     {
                         AudioController.instance.PlaySoundNVibrate(AudioController.instance.cut, 0);
-
-                        ChangeLookAt();
-
-                        PlayerController.instance.player.navMeshAgent.speed *= 3;
 
                         foreach (var bot in bots)
                         {
@@ -186,22 +178,20 @@ namespace HieuBon
                             if (b != null) b.SubtractHp(b.startHp, transform, false);
                         }
 
+                        bots.Clear();
+
                         DOVirtual.DelayedCall(0.35f, delegate
                         {
                             isKilling = false;
-                            bots.Clear();
-                        });
-                    });
+                            navMeshAgent.ResetPath();
+                        }).SetUpdate(true);
+                    }).SetUpdate(true);
                 }
                 else
                 {
                     if (isKilling) return;
 
                     isKilling = true;
-
-                    lookAt = targets[0].gameObject;
-
-                    PlayerController.instance.player.navMeshAgent.speed /= 3;
 
                     StartCoroutine(weapon.Attack(targets[0].transform));
                 }
@@ -252,10 +242,9 @@ namespace HieuBon
             weapon.Die();
             health.gameObject.SetActive(false);
             LevelController.instance.IsHasKey(gameObject);
-            LevelController.instance.RemovePlayer(this);
+            LevelController.instance.RemovePlayer();
             delayKill.Kill();
             isKilling = false;
-            CancelInvoke(nameof(ChangeLookAt));
             UIInGame.instance.virtualCam.ShakeCancel();
             col.enabled = false;
             animator.enabled = false;
@@ -264,10 +253,10 @@ namespace HieuBon
 
             if (killer == null) return;
 
-            Vector3 dir = transform.position - killer.position;
+            Vector3 dir = (transform.position - killer.position).normalized;
             for (int i = 0; i < rbs.Length; i++)
             {
-                rbs[i].AddForce(new Vector3(dir.x, dir.y + 0.5f, dir.z) * 1.5f, ForceMode.Impulse);
+                rbs[i].AddForce(dir + Vector3.up * 1.5f, ForceMode.Impulse);
             }
         }
 
@@ -277,11 +266,6 @@ namespace HieuBon
             {
                 rbs[i].isKinematic = isKinematic;
             }
-        }
-
-        public void ChangeLookAt()
-        {
-            lookAt = gameObject;
         }
 
         public void PlayBlood()
@@ -329,13 +313,12 @@ namespace HieuBon
             health.healthDamagerBar.fillAmount = hp / startHp;
         }
 
-        public void InitPlayer()
+        public void ReloadPlayer()
         {
             ACEPlay.Bridge.BridgeController.instance.Debug_LogError("Percent Hp " + GameManager.instance.PercentBlood.ToString(), false);
 
             LoadHealth();
 
-            transform.position = Vector3.zero;
             navMeshAgent.angularSpeed = 0;
             IsKinematic(true);
             animator.enabled = true;

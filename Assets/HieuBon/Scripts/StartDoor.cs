@@ -22,13 +22,12 @@ namespace HieuBon
 
         public IEnumerator ElevatorMoveUp(List<Player> players)
         {
-            UIInGame.instance.layerCover.raycastTarget = true;
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - 10, transform.localPosition.z);
             Transform playerController = PlayerController.instance.transform;
             playerController.position = Vector3.zero;
             playerController.DOKill();
             float startY = playerController.localPosition.y;
-            UIInGame.instance.handTutorial.Hide();
+            UIInGame.instance.handTutorial.StopHand();
             PlayerController.instance.player.navMeshAgent.enabled = false;
             playerController.localPosition = new Vector3(playerController.localPosition.x, playerController.localPosition.y - 10, playerController.localPosition.z);
             for (int i = 0; i < players.Count; i++)
@@ -59,7 +58,6 @@ namespace HieuBon
                     //UIManager.instance.ShowUIHome();
                     DOVirtual.DelayedCall(0.5f, delegate
                     {
-                        UIInGame.instance.layerCover.raycastTarget = false;
                     });
                 }
             });

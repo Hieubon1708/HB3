@@ -18270,6 +18270,7 @@ MonoBehaviour:
   uIBattle: {fileID: 441802420629868416}
   uIPlayerView: {fileID: 7809347728613395823}
   uIPlayerInformation: {fileID: 6495840151601929555}
+  handTutorial: {fileID: 6630481761473806763}
 --- !u!114 &340143641334300167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21402,7 +21403,7 @@ PrefabInstance:
     - target: {fileID: 633959795752051039, guid: 859211d8be2f8b64aac3682ce980e90a, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 5625738574140119572, guid: 72a2899e3d91b7d4b8a7a7c8bbc625a4, type: 2}
+      objectReference: {fileID: 2100000, guid: 85f08d8726d1e5248bfe8859508fde8e, type: 2}
     - target: {fileID: 633959795752051039, guid: 859211d8be2f8b64aac3682ce980e90a, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -21573,6 +21574,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5917468032570386553, guid: 859211d8be2f8b64aac3682ce980e90a, type: 3}
   m_PrefabInstance: {fileID: 2274018085511431092}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6630481761473806763 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4866943616140132895, guid: 859211d8be2f8b64aac3682ce980e90a, type: 3}
+  m_PrefabInstance: {fileID: 2274018085511431092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef1ee3743495cb942b68285bd48708a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2691414627330083842
 PrefabInstance:
   m_ObjectHideFlags: 0

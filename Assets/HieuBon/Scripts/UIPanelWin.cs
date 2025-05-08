@@ -1,7 +1,6 @@
 using ACEPlay.Bridge;
 using DG.Tweening;
 using System.Collections.Generic;
-using TigerForge;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -90,7 +89,6 @@ namespace HieuBon
 
         public void TextDollarReduce()
         {
-            UIInGame.instance.layerCover.raycastTarget = true;
             AudioController.instance.PlaySoundNVibrate(AudioController.instance.button, 50);
             arrow.DOKill();
             /*List<float> tempDistances = new List<float>(distances);

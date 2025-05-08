@@ -18,6 +18,7 @@ namespace HieuBon
         protected Coroutine lostTrack;
         protected Coroutine lastTrace;
         protected Coroutine hear;
+        protected Coroutine runAmok;
         Coroutine dodging;
 
         [HideInInspector]
@@ -92,7 +93,23 @@ namespace HieuBon
                 dodging = null;
             }
         }
+        
+        public void StartRunAmok()
+        {
+            if (runAmok == null)
+            {
+                runAmok = StartCoroutine(RunAmok());
+            }
+        }
 
+        public void StopRunAmok()
+        {
+            if (runAmok != null)
+            {
+                StopCoroutine(runAmok);
+                runAmok = null;
+            }
+        }
 
         public void StartHear(GameObject target)
         {
@@ -148,10 +165,7 @@ namespace HieuBon
                 if (isFind)
                 {
                     questionRotate.Show();
-                    if (attack != null)
-                    {
-                        StopAttack();
-                    }
+                    StopAttack();
                     radarView.SetColor(false);
                     timeOff += Time.fixedDeltaTime;
                     if (timeOff < targetTimeOff) return;
@@ -184,13 +198,15 @@ namespace HieuBon
                     {
                         BridgeController.instance.Debug_Log("Đang tìmmm");
                     }
-                    if (LevelController.instance.players.Count == 0) isFind = false;
+                    if (PlayerController.instance.player.hp <= 0) isFind = false;
                 }
             }
         }
 
         public IEnumerator Hear(GameObject target)
         {
+            if (!col.enabled) yield break;
+
             BridgeController.instance.Debug_Log("Nghe thấy đồng mình ngỏm");
             AudioController.instance.PlaySoundNVibrate(AudioController.instance.enemyDetect, 0);
             ChangeSpeed(detectSpeed, rotateDetectSpeed);
@@ -397,15 +413,98 @@ namespace HieuBon
             StopDodging();
         }
 
-        public override void SubtractHp(int hp, Transform killer, bool isOnlyBurn)
+        public IEnumerator RunAmok()
+        {
+            (weapon as BotWeaponNormal).laser1.enabled = false;
+            (weapon as BotWeaponNormal).laser2.enabled = false;
+
+            col.enabled = false;
+
+            StopHear();
+            StopProbe();
+
+            navMeshAgent.isStopped = true;
+            animator.SetBool("Walking", false);
+            questionRotate.Show();
+
+            ChangeSpeed(detectSpeed, rotateDetectSpeed);
+            navMeshAgent.isStopped = false;
+            animator.SetBool("Walking", true);
+
+            BridgeController.instance.Debug_Log("Dò xung quanh");
+
+            navMeshAgent.stoppingDistance = 0;
+
+            int step = 0;
+
+            while (hp > 0)
+            {
+                step++;
+                while (hp > 0)
+                {
+                    List<int> list = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };
+                    int indexRandom = Random.Range(0, list.Count);
+                    float angle = list[indexRandom] * 45f;
+                    Vector3 randomDirection = Quaternion.Euler(0, angle, 0) * Vector3.forward;
+                    float distance = Random.Range(5f, 8f);
+                    //Debug.DrawLine(transform.position, transform.position + randomDirection * distance, Color.red, 111);
+                    navMeshAgent.destination = transform.position + randomDirection * distance;
+                    yield return new WaitForFixedUpdate();
+                    yield return new WaitForFixedUpdate();
+                    yield return new WaitForFixedUpdate();
+                    if (navMeshAgent.remainingDistance <= 10) break;
+                }
+                animator.SetBool("Walking", true);
+                //BridgeController.instance.Debug_LogError("Position = " + randomDestination + " IsUpdatePosition = " + navMeshAgent.updatePosition + " Step = " + step);
+                while (hp > 0)
+                {
+                    if (navMeshAgent.remainingDistance <= 0.1f) animator.SetBool("Walking", false);
+                    if (navMeshAgent.remainingDistance == navMeshAgent.stoppingDistance) break;
+                    yield return new WaitForFixedUpdate();
+                }
+
+                if (step == 3)
+                {
+                    while (hp > 0)
+                    {
+                        Vector3 targetDirection = PlayerController.instance.player.transform.position - transform.position;
+                        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 5.5f);
+                        float angle = Quaternion.Angle(transform.rotation, targetRotation);
+                        if (angle < 5)
+                        {
+                            break;
+                        }
+
+                        yield return new WaitForFixedUpdate();
+                    }
+
+                    step = 0;
+                    Player player = LevelController.instance.GetPlayer(target);
+                    animator.SetTrigger("Aiming");
+                    animator.SetTrigger("Fire");
+                    yield return new WaitForSeconds(aiming);
+                    player.SubtractHp(damage, transform);
+                    weapon.Attack(player.transform);
+                    AudioController.instance.PlaySoundNVibrate(AudioController.instance.ak47Gun, 0);
+
+                    yield return new WaitForSeconds(rateOfFire);
+                    animator.SetTrigger("NoAiming");
+                }
+                yield return new WaitForSeconds(time);
+            }
+        }
+
+
+        public override void SubtractHp(int hp, Transform killer, bool isBurnOrPoison = false, bool isReceiveMoney = true)
         {
             if (this.hp <= 0) return;
 
             if (!isFind) hp *= 2;
 
-            base.SubtractHp(hp, killer, isOnlyBurn);
+            base.SubtractHp(hp, killer, isBurnOrPoison, isReceiveMoney);
 
-            if (!isOnlyBurn)
+            if (!isBurnOrPoison)
             {
                 PlayBlood();
                 StopProbe();
@@ -438,12 +537,12 @@ namespace HieuBon
                 IsKinematic(false);
                 StartCoroutine(Die());
 
-                if (!isOnlyBurn)
+                if (!isBurnOrPoison)
                 {
                     Vector3 dir = (transform.position - PlayerController.instance.player.transform.position).normalized;
                     for (int i = 0; i < rbs.Length; i++)
                     {
-                        rbs[i].AddForce(new Vector3(dir.x, dir.y, dir.z) * PlayerController.instance.player.weapon.force, ForceMode.Impulse);
+                        rbs[i].AddForce(new Vector3(dir.x, dir.y + 0.15f, dir.z) * PlayerController.instance.player.weapon.force, ForceMode.Impulse);
                     }
                 }
 
@@ -452,7 +551,7 @@ namespace HieuBon
             }
             else
             {
-                if (!isOnlyBurn)
+                if (!isBurnOrPoison)
                 {
                     AudioController.instance.PlaySoundNVibrate(AudioController.instance.enemyDamage, 50);
                     StartDodging(killer);

@@ -44,7 +44,7 @@ namespace HieuBon
             {
                 for (int i = 0; i < dollars.Length; i++)
                 {
-                    scDollars[i].In(target, wallLayer);
+                    scDollars[i].In(target.transform, wallLayer);
                 }
             });
         }
@@ -54,14 +54,6 @@ namespace HieuBon
             if (isOk) return 0;
             isOk = true;
             return coin;
-        }
-
-        public void ResetFx()
-        {
-            for (int i = 0; i < scDollars.Length; i++)
-            {
-                scDollars[i].ResetFx();
-            }
         }
     }
 }

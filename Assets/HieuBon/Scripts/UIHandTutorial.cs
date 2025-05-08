@@ -44,20 +44,9 @@ namespace HieuBon
             {
                 hand.position = paths[0];
                 hand.DOPath(paths, 3f, PathType.CatmullRom).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
-                Show();
+
+                canvasGroup.DOFade(1f, 0.5f).SetEase(Ease.Linear);
             });
-        }
-
-        public void Hide()
-        {
-            canvasGroup.DOKill();
-            canvasGroup.alpha = 0f;
-        }
-
-        public void Show()
-        {
-            UIInGame.instance.layerCover.raycastTarget = false;
-            canvasGroup.DOFade(1f, 0.5f).SetEase(Ease.Linear);
         }
 
         public void StopHand()

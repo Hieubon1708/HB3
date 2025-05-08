@@ -39,8 +39,6 @@ namespace HieuBon
         [HideInInspector]
         public List<Bot> botsReserve;
         [HideInInspector]
-        public List<Player> players;
-        [HideInInspector]
         public AlertType alertType;
         [HideInInspector]
         public List<Hostage> hostages;
@@ -69,14 +67,18 @@ namespace HieuBon
             {
                 pathInfo.Init();
             }
-
-            if(GameManager.instance.Level != 1) LoadPlayer(Vector3.zero);
         }
 
         public void Start()
         {
             InitBots();
             botsReserve = new List<Bot>(bots);
+
+            if (GameManager.instance.Level != 1 && GameManager.instance.Level != 4)
+            {
+                LoadPlayer(Vector3.zero);
+                UIInGame.instance.LoadUI(false);
+            }
 
             /*StartDoor startDoor = GetComponentInChildren<StartDoor>();
             UIInGame.instance.LoadUI(startDoor != null);
@@ -92,39 +94,8 @@ namespace HieuBon
             List<Bot> temp = new List<Bot>(bots);
             for (int i = 0; i < temp.Count; i++)
             {
-                if (!(temp[i] is Boss1)) temp[i].SubtractHp(999, PlayerController.instance.player.transform, false);
+                if (!(temp[i] is Boss1)) temp[i].SubtractHp(999, PlayerController.instance.player.transform);
             }
-        }
-
-        void ReloadPlayer()
-        {
-            players[0].LoadHealth();
-        }
-
-        public bool IsKilling()
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (players[i].isKilling) return true;
-            }
-            return false;
-        }
-
-        public void SetAngularSpeed(float angularSpeed)
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                players[i].navMeshAgent.angularSpeed = angularSpeed;
-            }
-        }
-
-        bool IsAllPoppyHaveWeapon()
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (players[i].weapon == null) return false;
-            }
-            return true;
         }
 
         public void Play()
@@ -147,10 +118,9 @@ namespace HieuBon
 
         public void LoadPlayer(Vector3 position)
         {
-            if (players.Count > 0)
+            if (PlayerController.instance != null)
             {
-                Destroy(players[0].gameObject);
-                players.Clear();
+                Destroy(PlayerController.instance.gameObject);
             }
 
             PlayerType playerType = GameManager.instance.CurrentPlayer;
@@ -158,8 +128,8 @@ namespace HieuBon
             WeaponType weaponType = (WeaponType)GameManager.instance.Weapon;
             AddPlayer(playerLevel, playerType, weaponType, position);
 
-            UIInGame.instance.virtualCam.Init(players[0].transform);
-            players[0].InitPlayer();
+            UIInGame.instance.virtualCam.Init(PlayerController.instance.player.transform);
+            PlayerController.instance.player.ReloadPlayer();
         }
 
         public bool IsBoss()
@@ -180,35 +150,18 @@ namespace HieuBon
             return null;
         }
 
-        public void RemovePlayer(Player player)
+        public void RemovePlayer()
         {
-            int indexOf = players.IndexOf(player);
-            if (indexOf == -1)
-            {
-                Debug.LogError("!!! " + player.name);
-                Debug.LogError("players Count " + players.Count);
-            }
-            players.Remove(player);
-            if (players.Count == 0)
-            {
-                PlayerController.instance.Lose();
-                UIInGame.instance.Lose();
-                EndDoor endDoor = GetComponentInChildren<EndDoor>();
-                if (endDoor != null) endDoor.StopDoor();
-                PlayerController.instance.player.navMeshAgent.isStopped = true;
-            }
+            PlayerController.instance.HideTouch();
+            UIInGame.instance.Lose();
+            EndDoor endDoor = GetComponentInChildren<EndDoor>();
+            if (endDoor != null) endDoor.StopDoor();
+            PlayerController.instance.player.navMeshAgent.isStopped = true;
         }
 
         public Player GetPlayer(GameObject player)
         {
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (players[i].gameObject == player)
-                {
-                    return players[i];
-                }
-            }
-            return null;
+            return PlayerController.instance.player;
         }
 
         public TrapLaser GetLaser(GameObject laser)
@@ -239,37 +192,9 @@ namespace HieuBon
         {
             GameObject p = Instantiate(GameController.instance.prePlayers[(int)playerType], position, Quaternion.identity, transform);
             Player sc = p.GetComponent<Player>();
-            players.Add(sc);
             sc.LoadWeapon(playerType, weaponType);
             sc.Init(playerLevel);
             return sc;
-        }
-
-        void RemovePlayers()
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (!players[i].gameObject.activeSelf)
-                {
-                    Destroy(players[i].gameObject);
-                }
-            }
-        }
-
-        public void ActiveNavMesh(bool isActive)
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                players[i].navMeshAgent.enabled = isActive;
-            }
-        }
-
-        public void DoMoveY(float y, float time)
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                players[i].transform.DOMoveY(y, time);
-            }
         }
 
         public Bot GetBot(GameObject bot)
@@ -303,10 +228,13 @@ namespace HieuBon
             }
         }
 
-        public void SetBot(PathInfo pathInfo)
+        public Bot SetBot(PathInfo pathInfo)
         {
-            bots.Add(Instantiate(pathInfo.prefab, transform).GetComponent<Bot>());
+            Bot bot = Instantiate(pathInfo.prefab, transform).GetComponent<Bot>();
+            bots.Add(bot);
             bots[bots.Count - 1].Init(pathInfo);
+
+            return bot;
         }
 
         public void StartProbes()
@@ -349,6 +277,21 @@ namespace HieuBon
                 }
             }
             return bot;
+        }
+
+        public Bot GetBotByBone(GameObject bone)
+        {
+            for (int i = 0; i < botsReserve.Count; i++)
+            {
+                for (int j = 0; j < botsReserve[i].rbs.Length; j++)
+                {
+                    if (botsReserve[i].rbs[j].gameObject == bone)
+                    {
+                        return botsReserve[i];
+                    }
+                }
+            }
+            return null;
         }
 
         public void Alert(AlertType alertType, GameObject target)

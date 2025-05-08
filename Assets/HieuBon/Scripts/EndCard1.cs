@@ -22,9 +22,8 @@ namespace HieuBon
 
         public IEnumerator Win()
         {
-            UIInGame.instance.layerCover.raycastTarget = true;
-            PlayerController.instance.Win();
-            LevelController.instance.SetAngularSpeed(500);
+            PlayerController.instance.HideTouch();
+            PlayerController.instance.AngularSpeed = 500;
 
             yield return new WaitForSeconds(0.3f);
 

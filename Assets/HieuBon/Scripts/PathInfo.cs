@@ -6,7 +6,7 @@ namespace HieuBon
     {
         public GameController.BotType botType;
         public GameController.PathType pathType;
-        public GameObject prefab;      
+        public GameObject prefab;
         public Transform[] path;
         public Vector3[][] paths;
         public bool isUpdatePosition;
@@ -15,9 +15,12 @@ namespace HieuBon
         public float angle;
         public float rotateSpeedForBoss;
 
+        [HideInInspector]
+        public Bot bot;
+
         public void Init()
         {
-            if(!gameObject.activeSelf) return;
+            if (!gameObject.activeSelf) return;
             paths = new Vector3[path.Length][];
             for (int i = 0; i < paths.Length; i++)
             {
@@ -26,11 +29,11 @@ namespace HieuBon
                 {
                     if (i == 0 && j == 0) angle = path[i].GetChild(j).transform.eulerAngles.y;
                     Vector3 pos = path[i].GetChild(j).transform.position;
-                    pathChild[j] = new Vector3(pos.x , 1.083333f, pos.z);
+                    pathChild[j] = new Vector3(pos.x, 1.083333f, pos.z);
                 }
                 paths[i] = pathChild;
             }
-            LevelController.instance.SetBot(this);
+            bot = LevelController.instance.SetBot(this);
         }
     }
 }

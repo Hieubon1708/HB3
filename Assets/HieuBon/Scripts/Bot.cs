@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Purchasing.Extension;
 
 namespace HieuBon
 {
@@ -163,11 +164,11 @@ namespace HieuBon
             navMeshAgent.speed = speed;
         }
 
-        public virtual void SubtractHp(int hp, Transform killer, bool isOnlyBurn)
+        public virtual void SubtractHp(int hp, Transform killer, bool isBurnOrPoison = false, bool isReceiveMoney = true)
         {
             GameController.TextDamageType textDamageType = GameController.TextDamageType.None;
 
-            if (!isOnlyBurn)
+            if (!isBurnOrPoison)
             {
                 PlayerController.instance.player.playerIndexes.DamageCrit(ref hp, ref textDamageType);
 
@@ -201,7 +202,7 @@ namespace HieuBon
                 textDamage.ShowDamage(hp);
             }
 
-            if (this.hp <= 0 && LevelController.instance.players.Count > 0)
+            if (this.hp <= 0 && PlayerController.instance.player.hp > 0)
             {
                 //EventManager.SetDataGroup(EventVariables.UpdateMission, this as BossBot ? MissionType.KillBoss : MissionType.KillEnemy, 1);
                 //EventManager.EmitEvent(EventVariables.UpdateMission);
@@ -233,11 +234,18 @@ namespace HieuBon
                     coin = 1;
                     BridgeController.instance.Debug_Log("!!! " + this);
                 }
-                Player player = LevelController.instance.players[0];
 
-                if (player != null)
+                if (isReceiveMoney)
                 {
-                    GameController.instance.FlyMoney(player.gameObject, new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z), coin);
+                    Player player = PlayerController.instance.player;
+                    if (player != null)
+                    {
+                        GameController.instance.FlyMoney(player.gameObject, new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z), coin);
+                    }
+                }
+                else
+                {
+                    //UpdateCoin
                 }
 
                 if (!(this as Boss))
@@ -246,7 +254,7 @@ namespace HieuBon
                     GameController.instance.ReceiveArmor(transform.position);
                 }
 
-                if (!isOnlyBurn) PlayerController.instance.player.playerIndexes.BloodSucking();
+                if (!isBurnOrPoison) PlayerController.instance.player.playerIndexes.BloodSucking();
 
                 if (fxBurn != null && fxBurn.isPlaying) fxBurn.Stop();
                 if (fxPoison != null && fxPoison.isPlaying) fxPoison.Stop();
@@ -272,6 +280,7 @@ namespace HieuBon
                             Quaternion targetRotation = Quaternion.LookRotation(direction);
                             while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
                             {
+
                                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, pathInfo.botType == GameController.BotType.Normal ? rotateSpeed : pathInfo.rotateSpeedForBoss);
                                 yield return new WaitForFixedUpdate();
                             }
@@ -295,15 +304,27 @@ namespace HieuBon
                     else if (pathInfo.pathType == GameController.PathType.Repeat)
                     {
                         bool isIncrease = true;
+
                         while (col.enabled)
                         {
+                            bool isTurn = false;
+
                             Vector3 direction = new Vector3(pathInfo.paths[indexPath][index].x, transform.position.y, pathInfo.paths[indexPath][index].z) - transform.position;
                             Quaternion targetRotation = Quaternion.LookRotation(direction);
                             while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
                             {
-                                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, pathInfo.botType == GameController.BotType.Normal ? rotateSpeed : pathInfo.rotateSpeedForBoss);
+                                if (!isTurn)
+                                {
+                                    animator.SetTrigger(IsTurnRight(targetRotation) ? "Rotate R" : "Rotate L");
+
+                                    isTurn = true;
+                                }
+
+                                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, pathInfo.botType == GameController.BotType.Normal ? rotateSpeed : pathInfo.rotateSpeedForBoss);                                                            
+
                                 yield return new WaitForFixedUpdate();
                             }
+
                             yield return new WaitForSeconds(time);
                             animator.SetBool("Walking", true);
                             navMeshAgent.destination = pathInfo.paths[indexPath][index];
@@ -346,11 +367,19 @@ namespace HieuBon
                         bool isIncrease = false;
                         while (col.enabled)
                         {
+                            bool isTurn = false;
+
                             float startRotate = transform.right.x;
                             Vector3 direction = new Vector3(pathInfo.paths[indexPath][index].x, transform.position.y, pathInfo.paths[indexPath][index].z) - transform.position;
                             Quaternion targetRotation = Quaternion.LookRotation(direction);
                             while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
                             {
+                                if (!isTurn)
+                                {
+                                    animator.SetTrigger(IsTurnRight(targetRotation) ? "Rotate R" : "Rotate L");
+
+                                    isTurn = true;
+                                }
                                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, pathInfo.botType == GameController.BotType.Normal ? rotateSpeed : pathInfo.rotateSpeedForBoss);
                                 yield return new WaitForFixedUpdate();
                             }
@@ -381,7 +410,6 @@ namespace HieuBon
                 SubtractHp(100, other.gameObject.layer == LayerMask.NameToLayer("Weapon") ? PlayerController.instance.player.transform : other.transform, false);
             }
         }
-
 
         public abstract IEnumerator Attack(GameObject target);
 
@@ -461,6 +489,23 @@ namespace HieuBon
             }
 
             fxBurn.Stop();
+        }
+
+        bool IsTurnRight(Quaternion targetRotation)
+        {
+            Quaternion currentRotation = transform.rotation;
+
+            Vector3 currentForward = currentRotation * Vector3.forward;
+            Vector3 targetForward = targetRotation * Vector3.forward;
+
+            float angle = Vector3.SignedAngle(currentForward, targetForward, Vector3.up);
+
+            if (angle > 0f)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

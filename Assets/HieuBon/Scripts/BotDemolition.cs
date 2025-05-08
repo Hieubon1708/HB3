@@ -62,9 +62,9 @@ namespace HieuBon
             }).SetEase(Ease.Linear);
         }
 
-        public override void SubtractHp(int hp, Transform killer, bool isOnlyBurn)
+        public override void SubtractHp(int hp, Transform killer, bool isBurnOrPoison = false, bool isReceiveMoney = true)
         {
-            base.SubtractHp(hp, killer, isOnlyBurn);
+            base.SubtractHp(hp, killer, isBurnOrPoison, isReceiveMoney);
 
             onHand.rb.isKinematic = true;
             onHand.transform.SetParent(LevelController.instance.pool);

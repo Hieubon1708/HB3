@@ -7,7 +7,6 @@ namespace HieuBon
     {
         public ParticleSystem par1;
         public ParticleSystem par2;
-        public ParticleSystem par3;
         public GameObject keyChild;
         Vector3 startPos;
         public SphereCollider col;
@@ -31,12 +30,13 @@ namespace HieuBon
 
                 par1.Stop();
                 par2.Stop();
-                par3.Play();
+
+                GameController.instance.PlayFxSmoke(transform.position);
 
                 transform.DOKill();
                 keyChild.transform.DOKill();
                 transform.SetParent(other.transform);
-                transform.localPosition = new Vector3(0, 16, 0);
+                transform.localPosition = new Vector3(0, 4.1f, 0);
 
                 keyChild.transform.localPosition = Vector3.right * 0.05f;
                 keyChild.transform.localScale = Vector3.one * 0.75f;
@@ -62,7 +62,6 @@ namespace HieuBon
 
             par1.Play();
             par2.Play();
-            par3.Stop();
 
             transform.DOKill();
             keyChild.transform.DOKill();

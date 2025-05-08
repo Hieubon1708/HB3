@@ -85,11 +85,11 @@ namespace HieuBon
             isDodging = false;
         }
 
-        public override void SubtractHp(int hp, Transform killer, bool isOnlyBurn)
+        public override void SubtractHp(int hp, Transform killer, bool isBurnOrPoison = false, bool isReceiveMoney = true)
         {
             if (this.hp <= 0) return;
 
-            base.SubtractHp(hp, killer, isOnlyBurn);
+            base.SubtractHp(hp, killer, isBurnOrPoison, isReceiveMoney);
 
             PlayBlood();
             StopDodging();

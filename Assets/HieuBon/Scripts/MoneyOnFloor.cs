@@ -6,34 +6,80 @@ namespace HieuBon
     {
         public Transform target;
         public bool isOk;
-        public Rigidbody rb;
         public ParticleSystem fx;
 
-        public void OnTriggerEnter(Collider other)
+        Collider[] colliders = new Collider[1];
+
+        LayerMask playerLayer;
+        LayerMask wallLayer;
+
+        MeshRenderer meshRenderer;
+
+        float time;
+
+        private void Awake()
         {
-            if (other.CompareTag("Player"))
-            {
-                Player player = LevelController.instance.GetPlayer(other.gameObject);
-                target = player.transform;
-                fx.transform.SetParent(player.transform);
-                fx.transform.localPosition = Vector3.up * 1.35f;
-                isOk = true;
-            }
+            wallLayer = LayerMask.GetMask("Wall");
+            playerLayer = LayerMask.GetMask("Player");
+
+            meshRenderer = GetComponentInChildren<MeshRenderer>();
         }
 
         public void FixedUpdate()
         {
+            if (!meshRenderer.enabled) return;
+
             if (isOk)
             {
-                Vector3 targetPos = new Vector3(target.position.x, 1f, target.position.z);
-                Vector3 newDirection = Vector3.MoveTowards(rb.position, targetPos, 0.25f);
-                rb.MovePosition(newDirection);
-                if (Vector3.Distance(rb.position, targetPos) < 1f)
+                Vector3 targetPos = new Vector3(target.position.x, target.position.y + 0.5f, target.position.z);
+
+                Vector3 newDirection = Vector3.MoveTowards(transform.position, targetPos, 0.25f);
+
+                transform.position = newDirection;
+
+                if (Vector3.Distance(transform.position, targetPos) < 1f)
                 {
-                    isOk = false;
-                    gameObject.SetActive(false);
+                    meshRenderer.enabled = false;
+
                     fx.Play();
+
                     UIInGame.instance.gamePlay.UpdateCoin(1);
+                }
+            }
+        }
+
+        private void Update()
+        {
+            if (!meshRenderer.enabled)
+            {
+                fx.transform.position = new Vector3(target.position.x, target.position.y + 0.5f, target.position.z);
+
+                time += Time.deltaTime;
+
+                if(time == 1) gameObject.SetActive(false);
+
+                return;
+            }
+
+            int amountEnemy = Physics.OverlapSphereNonAlloc(transform.position, 3f, colliders, playerLayer);
+
+            if (amountEnemy > 0)
+            {
+                RaycastHit hit;
+
+                Vector3 from = transform.position;
+
+                Vector3 to = PlayerController.instance.transform.position;
+
+                to.y += 0.5f;
+
+                Physics.Linecast(from, to, out hit, wallLayer);
+
+                if (hit.collider == null)
+                {
+                    target = PlayerController.instance.transform;
+
+                    isOk = true;
                 }
             }
         }

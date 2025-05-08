@@ -31,7 +31,8 @@ namespace HieuBon
         public ReceiveMoney[] receiveMoney;
         int indexMoney;
 
-        public IsTouch isTouch;
+        [HideInInspector]
+        public GameState gameState = GameState.Pause;
 
         ParticleSystem fxSmoke;
 
@@ -62,10 +63,10 @@ namespace HieuBon
             Circle
         }
 
-        public enum IsTouch
+        public enum GameState
         {
-            Yes,
-            No
+            Pause,
+            Play
         }
 
         public enum WeaponType
@@ -131,8 +132,6 @@ namespace HieuBon
             BridgeController.instance.LogLevelStartWithParameter("stealk", level);
             AudioController.instance.ResetAudio();
             BridgeController.instance.Debug_Log(level.ToString());
-
-            GameController.instance.ResetFxDollars();
 
             if (map != null) Destroy(map);
             map = Instantiate(Resources.Load<GameObject>(level.ToString()), container);
@@ -218,14 +217,6 @@ namespace HieuBon
             return null;
         }
 
-        public void ResetFxDollars()
-        {
-            for (int i = 0; i < receiveMoney.Length; i++)
-            {
-                receiveMoney[i].ResetFx();
-            }
-        }
-
         public void FlyMoney(GameObject target, Vector3 startPos, int coin)
         {
             ReceiveMoney money = receiveMoney[indexMoney];
@@ -238,10 +229,9 @@ namespace HieuBon
 
         public void PlayFxSmoke(Vector3 position)
         {
-
             if(fxSmoke == null)
             {
-                fxSmoke = Instantiate(preFxHealthRegen, container).GetComponent<ParticleSystem>();
+                fxSmoke = Instantiate(preFxSmoke, container).GetComponent<ParticleSystem>();
             }
 
             fxSmoke.transform.position = position;

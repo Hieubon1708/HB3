@@ -24,7 +24,6 @@ namespace HieuBon
             yield return new WaitForSeconds(0.3f);
             AudioController.instance.PlaySoundNVibrate(AudioController.instance.ak47Gun, 0);
             parWeapon.Play();
-            player.ChangeLookAt();
 
             bullets[indexBullet].gameObject.SetActive(false);
             bullets[indexBullet].ResetBullet();

@@ -25,7 +25,6 @@ namespace HieuBon
             
             AudioController.instance.PlaySoundNVibrate(AudioController.instance.rpg, 0);
             parWeapon.Play();
-            player.ChangeLookAt();
 
             bullets[indexBullet].gameObject.SetActive(false);
             bullets[indexBullet].ResetBullet();

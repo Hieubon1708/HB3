@@ -1,4 +1,3 @@
-using TigerForge;
 using UnityEngine;
 
 namespace HieuBon

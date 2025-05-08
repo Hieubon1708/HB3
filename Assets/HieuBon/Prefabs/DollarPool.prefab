@@ -82,7 +82,7 @@ MonoBehaviour:
   forceRotate: 0
   mesh: {fileID: 7450521822633446818}
   fx: {fileID: 4766180864703451130}
-  clusterDollar: {fileID: 8852345611443258499}
+  receiveMoney: {fileID: 8852345611443258499}
 --- !u!1 &347089050396558165
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ MonoBehaviour:
   forceRotate: 0
   mesh: {fileID: 622628916524305696}
   fx: {fileID: 7242897799386341936}
-  clusterDollar: {fileID: 8852345611443258499}
+  receiveMoney: {fileID: 8852345611443258499}
 --- !u!1 &1056185912587985488
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,7 +755,7 @@ MonoBehaviour:
   forceRotate: 0
   mesh: {fileID: 6300964256808118842}
   fx: {fileID: 326123250667508360}
-  clusterDollar: {fileID: 8852345611443258499}
+  receiveMoney: {fileID: 8852345611443258499}
 --- !u!1 &1453073478937076131
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,7 +838,7 @@ MonoBehaviour:
   forceRotate: 0
   mesh: {fileID: 3209801948385393956}
   fx: {fileID: 5925672780634093374}
-  clusterDollar: {fileID: 8852345611443258499}
+  receiveMoney: {fileID: 8852345611443258499}
 --- !u!1 &2201672193538156317
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,7 +1935,7 @@ MonoBehaviour:
   forceRotate: 0
   mesh: {fileID: 2201672193538156317}
   fx: {fileID: 3550857812575817787}
-  clusterDollar: {fileID: 8852345611443258499}
+  receiveMoney: {fileID: 8852345611443258499}
 --- !u!1 &4709273630738771480
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,6 +2024,7 @@ MonoBehaviour:
   - 6
   - 7
   - 8
+  isOk: 0
 --- !u!1 &5171145100188289634
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,7 +2138,7 @@ MonoBehaviour:
   forceRotate: 0
   mesh: {fileID: 2470551605306855489}
   fx: {fileID: 2569133697199566183}
-  clusterDollar: {fileID: 8852345611443258499}
+  receiveMoney: {fileID: 8852345611443258499}
 --- !u!1 &6205515504372342006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2489,7 +2490,7 @@ MonoBehaviour:
   forceRotate: 0
   mesh: {fileID: 2322270506012225316}
   fx: {fileID: 944598241112582878}
-  clusterDollar: {fileID: 8852345611443258499}
+  receiveMoney: {fileID: 8852345611443258499}
 --- !u!1 &7333364423152131690
 GameObject:
   m_ObjectHideFlags: 0
@@ -2572,7 +2573,7 @@ MonoBehaviour:
   forceRotate: 0
   mesh: {fileID: 347089050396558165}
   fx: {fileID: 3620540029093183315}
-  clusterDollar: {fileID: 8852345611443258499}
+  receiveMoney: {fileID: 8852345611443258499}
 --- !u!1 &7450521822633446818
 GameObject:
   m_ObjectHideFlags: 0

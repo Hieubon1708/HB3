@@ -17,8 +17,7 @@ namespace HieuBon
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Player")
-                && !UIInGame.instance.layerCover.raycastTarget)
+            if (other.CompareTag("Player"))
             {
                 openDoor = StartCoroutine(Win(transform.position));
             }
@@ -35,9 +34,8 @@ namespace HieuBon
 
         public IEnumerator Win(Vector3 endPointPosition)
         {
-            UIInGame.instance.layerCover.raycastTarget = true;          
-            PlayerController.instance.Win();
-            LevelController.instance.SetAngularSpeed(500);
+            PlayerController.instance.HideTouch();
+            PlayerController.instance.AngularSpeed = 500;
             OpenDoor();
             yield return new WaitForSeconds(time / 3);
             PlayerController.instance.player.navMeshAgent.destination = endPointPosition;
@@ -52,11 +50,8 @@ namespace HieuBon
             yield return new WaitForSeconds(time);
             Action action = () =>
             {
-                for (int i = 0; i < LevelController.instance.players.Count; i++)
-                {
-                    LevelController.instance.players[i].navMeshAgent.enabled = false;
-                    LevelController.instance.players[i].transform.DOLocalMoveY(LevelController.instance.players[i].transform.localPosition.y + 10, 1f);
-                }
+                PlayerController.instance.player.navMeshAgent.enabled = false;
+                PlayerController.instance.player.transform.DOLocalMoveY(PlayerController.instance.player.transform.localPosition.y + 10, 1f);
                 PlayerController.instance.player.navMeshAgent.enabled = false;
                 PlayerController.instance.transform.DOMoveY(PlayerController.instance.transform.position.y + 10, 1f);
                 //UIInGame.instance.virtualCam.ElevatorMoveUp(1f);

@@ -838,8 +838,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0.82, z: 0}
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &5574921027747853903
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4808,8 +4808,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 374542347056514219}
     - target: {fileID: 6007321027830139403, guid: e8f1e61f0c1625d46b86774ee71b1358, type: 3}
+      propertyPath: VisionAngle
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007321027830139403, guid: e8f1e61f0c1625d46b86774ee71b1358, type: 3}
       propertyPath: VisionRange
-      value: 5
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 6007321027830139403, guid: e8f1e61f0c1625d46b86774ee71b1358, type: 3}
       propertyPath: VisionObstructingLayer.m_Bits
@@ -4973,47 +4977,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248409, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248449, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248530, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248531, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248560, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248562, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248563, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248565, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248731, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248769, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792248778, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2326354342792249012, guid: 68a235ec763749b4d92e0b41a0aea42b, type: 3}
       propertyPath: m_LocalPosition.x

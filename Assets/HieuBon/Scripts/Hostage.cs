@@ -14,6 +14,8 @@ namespace HieuBon
         [HideInInspector]
         public bool isRelease;
 
+        public GameObject blindfold;
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -24,6 +26,8 @@ namespace HieuBon
         {
             if (other.CompareTag("Player") && !LevelController.instance.hostages.Contains(this))
             {
+                blindfold.SetActive(false);
+
                 animator.SetTrigger("Release");
 
                 LevelController.instance.hostages.Add(this);
@@ -64,7 +68,7 @@ namespace HieuBon
 
             if(isStart)
             {
-                UIInGame.instance.virtualCam.CamZoom(25f, 1f);
+                UIInGame.instance.virtualCam.CamZoom(25f, 1f, 0f);
             }
 
             navmesh.SetDestination(point2);

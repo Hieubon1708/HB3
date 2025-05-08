@@ -7,13 +7,11 @@ using UnityEngine;
 
 public class EndPoint : MonoBehaviour
 {
-    public Transform target1;
-    public Transform target2;
+    public Transform target;
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player")
-            && !UIInGame.instance.layerCover.raycastTarget)
+        if (other.CompareTag("Player"))
         {
             StartCoroutine(Win());
         }
@@ -21,18 +19,13 @@ public class EndPoint : MonoBehaviour
 
     public IEnumerator Win()
     {
-        UIInGame.instance.layerCover.raycastTarget = true;
-        PlayerController.instance.Win();
-        LevelController.instance.SetAngularSpeed(500);
+        GameController.instance.gameState = GameController.GameState.Pause;
 
-        PlayerController.instance.player.navMeshAgent.destination = target1.position;
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForFixedUpdate();
-        yield return new WaitUntil(() => PlayerController.instance.player.navMeshAgent.remainingDistance == PlayerController.instance.player.navMeshAgent.stoppingDistance);
-        yield return new WaitForSeconds(0.3f);
+        PlayerController.instance.HideTouch();
+        PlayerController.instance.AngularSpeed = 500;
+        PlayerController.instance.player.animator.SetFloat("Speed", 1);
 
-        PlayerController.instance.player.navMeshAgent.destination = target2.position;
+        PlayerController.instance.player.navMeshAgent.destination = target.position;
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();

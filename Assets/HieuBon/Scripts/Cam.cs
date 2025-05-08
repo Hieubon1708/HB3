@@ -17,9 +17,9 @@ namespace HieuBon
         public float y2;
         public float time;
         Tween camEnd;
-        float defaultSize1 = 20.60969f;
-        float defaultSize2 = 17.47027f;
-        float elevator = 29.86284f;
+        float defaultSize1 = 20.5f;
+        float defaultSize2 = 17.5f;
+        float elevator = 30;
 
         void Awake()
         {
@@ -51,7 +51,7 @@ namespace HieuBon
 
         public void CamStartZoom()
         {
-            CamZoom(defaultSize2, time);
+            CamZoom(defaultSize2, time, 0f);
             DOVirtual.Float(cinemachineTransposer.m_FollowOffset.z, y2, time, (y) =>
             {
                 cinemachineTransposer.m_FollowOffset = new Vector3(cinemachineTransposer.m_FollowOffset.x, cinemachineTransposer.m_FollowOffset.y, y);
@@ -77,12 +77,12 @@ namespace HieuBon
             StopShake();
         }
 
-        public void CamZoom(float end, float duration)
+        public void CamZoom(float end, float duration, float delayCall)
         {
             camEnd = DOVirtual.Float(cinemachineCam.m_Lens.FieldOfView, end, duration, (v) =>
             {
                 cinemachineCam.m_Lens.FieldOfView = v;
-            });
+            }).SetDelay(delayCall);
         }
 
         public void ShakeCancel()

@@ -64,22 +64,7 @@ namespace HieuBon
 
         void CheckRemainingPoppyInSpot()
         {
-            bool isRemaining = false;
-            for (int i = 0; i < players.Count; i++)
-            {
-                for (int j = 0; j < LevelController.instance.players.Count; j++)
-                {
-                    if (players[i] == LevelController.instance.players[j].gameObject)
-                    {
-                        isRemaining = true;
-                        break;
-                    }
-                }
-                if (isRemaining) break;
-                else players.RemoveAt(i);
-            }
-            if (!isRemaining) ResumScan();
-            else Invoke(nameof(CheckRemainingPoppyInSpot), 1f);
+            ResumScan();
         }
 
         void ResumScan()

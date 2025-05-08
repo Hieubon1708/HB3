@@ -5,7 +5,7 @@ namespace HieuBon
     public class Money : MonoBehaviour
     {
         public Rigidbody rb;
-        public GameObject target;
+        public Transform target;
         public bool isOk;
         public bool isRotateLeft;
         public float forceRotate;
@@ -28,11 +28,9 @@ namespace HieuBon
             rb.AddTorque(dir * forceRotate, ForceMode.Impulse);
         }
 
-        public void In(GameObject target, LayerMask wallLayer)
+        public void In(Transform target, LayerMask wallLayer)
         {
-            this.target = target;
-            fx.transform.SetParent(target.transform);
-            fx.transform.localPosition = Vector3.up * 3f;
+            this.target = target;   
             rb.excludeLayers = wallLayer;
             rb.AddTorque(dir * -forceRotate, ForceMode.Impulse);
             isOk = true;
@@ -56,10 +54,13 @@ namespace HieuBon
                 }
             }
         }
-        
-        public void ResetFx()
+
+        private void Update()
         {
-            fx.transform.SetParent(transform);
+            if (!mesh.activeSelf)
+            {
+                fx.transform.position = new Vector3(target.position.x, target.position.y + 0.5f, target.position.z);
+            }
         }
     }
 }

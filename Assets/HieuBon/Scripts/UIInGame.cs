@@ -3,7 +3,6 @@ using Cinemachine;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using TigerForge;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,7 +19,6 @@ namespace HieuBon
         public Cam virtualCam;
         public Animation glow;
         public Animation camAni;
-        public Image layerCover;
         int[] pieces = new int[] { 6, 4, 0, 15, 3, 4, 0, 7, 4, 0, 0, 0, 4 };
         public Sprite[] iconCharacters;
         public Image[] iconCharacter;
@@ -44,10 +42,8 @@ namespace HieuBon
         public void Lose()
         {
             gamePlay.Lose();
-            layerCover.raycastTarget = true;
             DOVirtual.DelayedCall(2.5f, delegate
             {
-                layerCover.raycastTarget = false;
                 //gamePlay.panelLose.SetActive(true);
             });
         }
@@ -234,8 +230,10 @@ namespace HieuBon
         public void LoadUI(bool isElevator)
         {
             gamePlay.LoadUI();
-            layerCover.raycastTarget = true;
+
             virtualCam.ResetCam();
+
+            navigation.SetActive(true);
 
             PlayerController.instance.HideTouch();
 
@@ -321,7 +319,7 @@ namespace HieuBon
 
             FadeManager.instance.FadeIn(() =>
             {
-                BridgeController.instance.PlayCount++;
+                /*BridgeController.instance.PlayCount++;
 
                 UnityEvent e = new UnityEvent();
                 e.AddListener(() =>
@@ -340,7 +338,7 @@ namespace HieuBon
                     BridgeController.instance.PlayCount = 0;
                 });
 
-                BridgeController.instance.ShowInterstitial("stealth_win", e, onDone);
+                BridgeController.instance.ShowInterstitial("stealth_win", e, onDone);*/
             });
         }
 
@@ -348,11 +346,10 @@ namespace HieuBon
         {
             System.Action action = () =>
             {
-                layerCover.raycastTarget = false;
                 gamePlay.panelWin.SetActive(true);
             };
             Win(action, 1.5f);
-            PlayerController.instance.Win();
+            PlayerController.instance.HideTouch();
             GameManager.instance.PercentBlood = 100;
             GameManager.instance.Weapon = GameController.WeaponType.Default;
             GameManager.instance.FistTimeShowUIWeapon = 0;
@@ -362,7 +359,6 @@ namespace HieuBon
 
         public IEnumerator BossIntro()
         {
-            layerCover.raycastTarget = true;
             UIInGame.instance.handTutorial.StopHand();
             boss = LevelController.instance.GetBoss();
             yield return new WaitForSeconds(0.5f);
@@ -373,7 +369,6 @@ namespace HieuBon
             yield return new WaitForSeconds(1f);
             DOVirtual.DelayedCall(0.5f, delegate
             {
-                layerCover.raycastTarget = false;
             });
             //UIManager.instance.ShowUIHome();
             UIInGame.instance.handTutorial.PlayHand();
@@ -402,11 +397,6 @@ namespace HieuBon
         public void StartIntro()
         {
             navigation.SetActive(false);
-        }
-
-        public void EndIntro()
-        {
-            navigation.SetActive(true);
         }
 
         public void HitEffect()

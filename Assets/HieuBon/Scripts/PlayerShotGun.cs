@@ -25,7 +25,6 @@ namespace HieuBon
 
             AudioController.instance.PlaySoundNVibrate(AudioController.instance.shotGun, 0);
             parWeapon.Play();
-            player.ChangeLookAt();
 
             float visionAngle = 30f * Mathf.Deg2Rad;
             float Currentangle = -visionAngle / 2;
