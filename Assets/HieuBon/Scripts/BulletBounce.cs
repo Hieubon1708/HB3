@@ -62,14 +62,14 @@ namespace HieuBon
                 collisionDirection.Normalize();
 
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, collisionDirection, out hit, 5))
+                if (Physics.Raycast(transform.position - transform.forward, collisionDirection, out hit, 5))
                 {
                     Vector3 normal = hit.normal;
                     Vector3 reflectionDirection = Vector3.Reflect(collisionDirection, normal);
 
                     //Debug.Log("Hướng phản xạ (raycast): " + reflectionDirection);
 
-                    rb.velocity = reflectionDirection * 5;
+                    rb.velocity = reflectionDirection * speed;
 
                     transform.LookAt(transform.position + rb.velocity);
                 }

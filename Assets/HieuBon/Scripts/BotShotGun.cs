@@ -23,7 +23,7 @@ namespace HieuBon
             for (int i = 0; i < 5; i++)
             {
 
-                BulletChase bullet = bullets[indexBullet];
+                BulletStraight bullet = bullets[indexBullet];
 
                 Sine = Mathf.Sin(Currentangle);
                 Cosine = Mathf.Cos(Currentangle);

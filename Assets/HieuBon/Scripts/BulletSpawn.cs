@@ -52,7 +52,7 @@ namespace HieuBon
 
                 Vector3 dir = (transform.forward * -Cosine) + (transform.right * -Sine);
 
-                bulletSpawns[indexBulletSpawn].Init(damage, "Player", 2, 5, 0, transform.position, transform.position + dir * 5);
+                bulletSpawns[indexBulletSpawn].Init(damage, "Player", 2, speed, 0, transform.position, transform.position + dir * 5);
 
                 indexBulletSpawn++;
                 if (indexBulletSpawn == bulletSpawns.Length) indexBulletSpawn = 0;

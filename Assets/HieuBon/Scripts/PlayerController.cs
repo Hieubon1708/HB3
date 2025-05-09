@@ -115,7 +115,7 @@ namespace HieuBon
 
                 if (isKilling)
                 {
-                    if(Vector3.Distance(player.bots[0].transform.position, transform.position) > 1f)
+                    if(Vector3.Distance(player.bots[0].transform.position, transform.position) > 1.5f)
                     {
                         dir = (player.bots[0].transform.position - transform.position).normalized * mulJoystick;
                         dir.y = 0;

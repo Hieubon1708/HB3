@@ -39,7 +39,6 @@ namespace HieuBon
                 bulletBounces[i] = b.GetComponent<BulletBounce>();
                 b.SetActive(false);
             }
-            transform.LookAt(PlayerController.instance.transform, Vector3.up);
         }
 
         public override IEnumerator Attack(GameObject poppy)
@@ -55,7 +54,7 @@ namespace HieuBon
 
             Vector3 lookAt = new Vector3(poppy.transform.position.x, bulletSpawns[indexBulletSpawn].transform.position.y, poppy.transform.position.z);
 
-            bulletSpawns[indexBulletSpawn].Init(damage, "Player", 5, 0, startBullet.position, lookAt, 1, bulletBounces);
+            bulletSpawns[indexBulletSpawn].Init(damage, "Player", bulletSpeed, 0, startBullet.position, lookAt, 1, bulletBounces);
 
             indexBulletSpawn++;
             if (indexBulletSpawn == bulletSpawns.Length) indexBulletSpawn = 0;

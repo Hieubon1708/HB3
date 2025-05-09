@@ -500,7 +500,7 @@ namespace HieuBon
         {
             if (this.hp <= 0) return;
 
-            if (!isFind) hp *= 2;
+            if (!isFind) hp = this.hp;
 
             base.SubtractHp(hp, killer, isBurnOrPoison, isReceiveMoney);
 

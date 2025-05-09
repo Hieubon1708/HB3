@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4993255539388799}
   - component: {fileID: 54942993176100022}
-  - component: {fileID: 4865183961870706251}
   - component: {fileID: 8707980347713694683}
+  - component: {fileID: 1173313378941339050}
   m_Layer: 11
   m_Name: SniperBullet
   m_TagString: Bullet
@@ -63,20 +63,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4865183961870706251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1016408630006870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 665f359ef1fa5de489a50dc820e15802, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 54942993176100022}
-  trailRenderer: {fileID: 96494578637439109}
 --- !u!135 &8707980347713694683
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -98,6 +84,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1173313378941339050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016408630006870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 613e9f5a320347d41afe27051b0ffde8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: 
+  damage: 0
+  trailRenderer: {fileID: 0}
+  rb: {fileID: 0}
+  isPoison: 0
 --- !u!1 &1203871195841012
 GameObject:
   m_ObjectHideFlags: 0
