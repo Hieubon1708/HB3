@@ -22,8 +22,7 @@ namespace HieuBon
 
         public IEnumerator Win()
         {
-            PlayerController.instance.HideTouch();
-            PlayerController.instance.AngularSpeed = 500;
+            PlayerController.instance.Pause();
 
             yield return new WaitForSeconds(0.3f);
 
@@ -65,18 +64,6 @@ namespace HieuBon
 
             aniFlying.Stop();
             helicopter.DOMove(new Vector3(helicopter.position.x - 10, helicopter.position.y + 10, helicopter.position.z), 2.5f).SetEase(Ease.InOutQuad);
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                par.Stop();
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                par.Play();
-            }
         }
     }
 }

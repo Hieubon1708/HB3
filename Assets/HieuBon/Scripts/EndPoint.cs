@@ -23,7 +23,6 @@ public class EndPoint : MonoBehaviour
 
         PlayerController.instance.HideTouch();
         PlayerController.instance.AngularSpeed = 500;
-        PlayerController.instance.player.animator.SetFloat("Speed", 1);
 
         PlayerController.instance.player.navMeshAgent.destination = target.position;
         yield return new WaitForFixedUpdate();

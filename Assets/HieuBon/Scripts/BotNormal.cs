@@ -10,7 +10,7 @@ namespace HieuBon
             Player player = LevelController.instance.GetPlayer(target);
             animator.SetTrigger("Aiming");
             animator.SetTrigger("Fire");
-            yield return new WaitForSeconds(0.867f / 3f);
+            yield return new WaitForSeconds(aiming);
             while (player.col.enabled && col.enabled)
             {
                 player.SubtractHp(damage, transform);

@@ -60,9 +60,9 @@ namespace HieuBon
 
         private void OnTriggerEnter(Collider other)
         {
-            if (PlayerController.instance.player.amountSmoke > 0) return;
             if (other.CompareTag("Player"))
             {
+                if (PlayerController.instance.player.amountSmoke > 0) return;
                 if (!players.Contains(other.gameObject))
                 {
                     players.Add(other.gameObject);

@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Purchasing.Extension;
 
 namespace HieuBon
 {
@@ -45,7 +44,7 @@ namespace HieuBon
         [HideInInspector]
         public float distanceFinding;
         public float bulletSpeed;
-        public float aiming = 0.15f;
+        public float aiming = 0.867f / 3f;
 
         [HideInInspector]
         public bool isKilling;
@@ -74,7 +73,7 @@ namespace HieuBon
             navMeshAgent = GetComponent<NavMeshAgent>();
             pathInfo = GetComponentInChildren<PathInfo>();
             weapon = GetComponentInChildren<BotWeapon>();
-            textDamage = GetComponentInChildren<UITextDamage>();
+            textDamage = GetComponentInChildren<UITextDamage>(true);
             col = GetComponent<CapsuleCollider>();
 
             blood = transform.Find("Blood").GetComponent<ParticleSystem>();

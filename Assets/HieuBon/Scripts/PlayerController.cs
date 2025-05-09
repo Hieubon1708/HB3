@@ -105,32 +105,47 @@ namespace HieuBon
 
         private void Update()
         {
-            if (GameController.instance.gameState == GameController.GameState.Pause) return;
-
-            float speedOfFrame = player.navMeshAgent.speed * Time.deltaTime;
-
-            Vector3 dir = new Vector3(movementAmount.x, 0f, movementAmount.y);
-
-            if (player.bots.Count > 0)
+            if (GameController.instance.gameState == GameController.GameState.Play)
             {
-                dir = (player.bots[0].transform.position - transform.position).normalized * mulJoystick;
-                dir.y = 0;
+                float speedOfFrame = player.navMeshAgent.speed * Time.deltaTime;
+
+                Vector3 dir = Vector3.zero;
+
+                bool isKilling = player.isComeCloser;
+
+                if (isKilling)
+                {
+                    if(Vector3.Distance(player.bots[0].transform.position, transform.position) > 1f)
+                    {
+                        dir = (player.bots[0].transform.position - transform.position).normalized * mulJoystick;
+                        dir.y = 0;
+                    }
+                }
+                else
+                {
+                    dir = new Vector3(movementAmount.x, 0f, movementAmount.y);
+                }
+
+                scaledMovement = speedOfFrame * dir;
+
+                player.navMeshAgent.Move(scaledMovement);
+
+                transform.LookAt(player.isComeCloser ? new Vector3(player.bots[0].transform.position.x, transform.position.y, player.bots[0].transform.position.z) : transform.position + scaledMovement);
+
+                if (!player.isComeCloser)
+                {
+                    Vector3 total = speedOfFrame * (new Vector3(movementAmount.x, 0f, movementAmount.y) * 1f).normalized;
+                    mulJoystick = movementAmount.magnitude;
+                    speed = 0.6f + (scaledMovement.magnitude / total.magnitude) * 0.4f;
+                }
+
+                player.animator.SetFloat("Speed", speed);
             }
 
-            scaledMovement = speedOfFrame * dir;
-
-            player.navMeshAgent.Move(scaledMovement);
-
-            transform.LookAt(player.bots.Count > 0 ? new Vector3(player.bots[0].transform.position.x, transform.position.y, player.bots[0].transform.position.z) : transform.position + scaledMovement);
-
-            if (player.bots.Count == 0)
+            if (GameController.instance.gameState == GameController.GameState.Pause)
             {
-                Vector3 total = speedOfFrame * (new Vector3(movementAmount.x, 0f, movementAmount.y) * 1f).normalized;
-                mulJoystick = movementAmount.magnitude;
-                speed = 0.6f + (scaledMovement.magnitude / total.magnitude) * 0.4f;
+                player.animator.SetFloat("Speed", player.navMeshAgent.velocity.magnitude);
             }
-
-            player.animator.SetFloat("Speed", speed);
         }
 
         public void ShowTouch()
@@ -144,6 +159,22 @@ namespace HieuBon
             canvasGroup.alpha = 0;
 
             scaledMovement = Vector3.zero;
+        }
+
+        public void Pause()
+        {
+            PlayerController.instance.HideTouch();
+            PlayerController.instance.AngularSpeed = 500;
+
+            GameController.instance.gameState = GameController.GameState.Pause;
+        }
+
+        public void Resume()
+        {
+            PlayerController.instance.ShowTouch();
+            PlayerController.instance.AngularSpeed = 0;
+
+            GameController.instance.gameState = GameController.GameState.Play;
         }
 
         public void Play()

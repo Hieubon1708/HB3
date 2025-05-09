@@ -507,6 +507,7 @@ namespace HieuBon
             if (!isBurnOrPoison)
             {
                 PlayBlood();
+                StopRunAmok();
                 StopProbe();
                 StopAttack();
                 StopHear();

@@ -34,8 +34,8 @@ namespace HieuBon
 
         public IEnumerator Win(Vector3 endPointPosition)
         {
-            PlayerController.instance.HideTouch();
-            PlayerController.instance.AngularSpeed = 500;
+            PlayerController.instance.Pause();
+
             OpenDoor();
             yield return new WaitForSeconds(time / 3);
             PlayerController.instance.player.navMeshAgent.destination = endPointPosition;

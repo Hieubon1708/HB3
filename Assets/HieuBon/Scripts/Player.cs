@@ -29,6 +29,8 @@ namespace HieuBon
 
         [HideInInspector]
         public bool isKilling;
+        [HideInInspector]
+        public bool isComeCloser;
         public Transform hips;
         [HideInInspector]
         public Rigidbody[] rbs;
@@ -156,6 +158,7 @@ namespace HieuBon
                 if (isKilling || bots.Count == 0) return;
 
                 isKilling = true;
+                isComeCloser = true;
 
                 if (weapon.weaponType == GameController.WeaponType.Default)
                 {
@@ -170,12 +173,15 @@ namespace HieuBon
 
                     delayKill = DOVirtual.DelayedCall(0.375f, delegate
                     {
+                            isComeCloser = false;
+
                         AudioController.instance.PlaySoundNVibrate(AudioController.instance.cut, 0);
 
                         foreach (var bot in bots)
                         {
                             Bot b = LevelController.instance.GetBot(bot.gameObject);
-                            if (b != null) b.SubtractHp(b.startHp, transform, false);
+
+                            if (b != null) b.SubtractHp(weapon.damage,  transform);
                         }
 
                         bots.Clear();
@@ -239,6 +245,8 @@ namespace HieuBon
 
         public void Die(Transform killer)
         {
+            GameController.instance.gameState = GameController.GameState.Pause;
+
             weapon.Die();
             health.gameObject.SetActive(false);
             LevelController.instance.IsHasKey(gameObject);

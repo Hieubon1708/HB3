@@ -13,6 +13,9 @@ namespace HieuBon
         private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
         CinemachineTransposer cinemachineTransposer;
 
+        [HideInInspector]
+        public CinemachineBrain cinemachineBrain;
+
         public float y1;
         public float y2;
         public float time;
@@ -30,6 +33,7 @@ namespace HieuBon
             elevator *= newAspectRatio / aspectRatio;
             cinemachineBasicMultiChannelPerlin = cinemachineCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             cinemachineTransposer = cinemachineCam.GetCinemachineComponent<CinemachineTransposer>();
+            cinemachineBrain = cam.GetComponent<CinemachineBrain>();
         }
 
         public void Init(Transform target)

@@ -1,4 +1,5 @@
 using Cinemachine;
+using DG.DemiLib;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -69,6 +70,9 @@ namespace HieuBon
 
         public Transform startBullet;
 
+        public GameObject entrance;
+        public GameObject text;
+
         private void Awake()
         {
             startAngle = cam.localEulerAngles;
@@ -100,6 +104,9 @@ namespace HieuBon
         {
             if (other.CompareTag("Player"))
             {
+                entrance.SetActive(true);
+                text.SetActive(false);
+
                 GetComponent<SphereCollider>().enabled = false;
 
                 cinemachineCam.m_Lens.FieldOfView = UIInGame.instance.virtualCam.cinemachineCam.m_Lens.FieldOfView;
@@ -126,6 +133,8 @@ namespace HieuBon
 
         IEnumerator ComeIn()
         {
+            GameController.instance.gameState = GameController.GameState.Pause;
+
             PlayerController.instance.Destination = transform.position;
 
             yield return new WaitForFixedUpdate();
@@ -157,23 +166,6 @@ namespace HieuBon
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                foreach (var path in bots)
-                {
-                    (path.bot as BotSentry).StopProbe();
-                    (path.bot as BotSentry).navMeshAgent.isStopped = true;
-                    (path.bot as BotSentry).animator.SetBool("Walking", false);
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-
-            }
             if (isEnd) return;
             if (isLookAtSniper)
             {
@@ -244,9 +236,13 @@ namespace HieuBon
                             if (bot != null)
                             {
                                 currentEnemy--;
-                                
+
                                 if (currentEnemy == 0)
                                 {
+                                    GameController.instance.gameState = GameController.GameState.Play;
+
+                                    entrance.SetActive(false);
+
                                     PlayerController.instance.player.animator.Play("Sniper_aiming");
 
                                     bot.navMeshAgent.isStopped = true;
@@ -285,7 +281,7 @@ namespace HieuBon
 
                                     AimUp(0);
                                     isEnd = true;
-                                    cinemachineCam.gameObject.SetActive(false);                                    
+                                    cinemachineCam.gameObject.SetActive(false);
                                 }
                                 else
                                 {
@@ -331,6 +327,10 @@ namespace HieuBon
 
             if (PlayerController.instance.player.hp <= 0)
             {
+                foreach (var path in bots)
+                {
+                    (path.bot as BotSentry).StopRunAmok();
+                }
                 AimUp(0);
                 isEnd = true;
                 healthAndRemainingEnemy.SetActive(false);

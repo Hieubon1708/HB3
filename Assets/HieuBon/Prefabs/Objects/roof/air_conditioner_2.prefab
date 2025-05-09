@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6406214020186212463}
   - component: {fileID: 3772550217592388727}
   - component: {fileID: 244042131987756021}
-  m_Layer: 0
+  - component: {fileID: 1899749106020395117}
+  m_Layer: 6
   m_Name: air_conditioner_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,3 +84,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1899749106020395117
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4550858663576779927}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1939881, y: 1.0644978, z: 0.65939903}
+  m_Center: {x: 0, y: 0.5306311, z: 0}

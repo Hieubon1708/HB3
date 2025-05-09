@@ -26,11 +26,11 @@ namespace HieuBon
 
         public void OpenDoor()
         {
-            parLock.Stop();
+            if(parLock != null) parLock.Stop();
             locks[0].isKinematic = false;
             locks[1].isKinematic = false;
             col.enabled = false;
-            open.Play();
+            if(open != null) open.Play();
             obstacle.enabled = false;
             door.transform.DOLocalRotate(Vector3.up * 90, 0.5f);
         }

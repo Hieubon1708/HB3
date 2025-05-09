@@ -208,6 +208,18 @@ namespace HieuBon
             }
             return null;
         }
+        
+        public Bot GetBot()
+        {
+            for (int i = 0; i < bots.Count; i++)
+            {
+                if (bots[i] is Boss)
+                {
+                    return bots[i];
+                }
+            }
+            return null;
+        }
 
         public void RemoveBot(GameObject bot)
         {

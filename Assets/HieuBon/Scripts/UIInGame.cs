@@ -1,6 +1,7 @@
 using ACEPlay.Bridge;
 using Cinemachine;
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -32,11 +33,31 @@ namespace HieuBon
 
         public UIHandTutorial handTutorial;
 
+        public Image fade;
+
         private void Awake()
         {
             instance = this;
 
             gamePlay = GetComponentInChildren<GamePlay>();
+        }
+
+        public void FadeIn(Action callBack, float time)
+        {
+            fade.raycastTarget = true;
+            fade.DOFade(1f, time).OnComplete(delegate
+            {
+                if(callBack != null) callBack.Invoke();
+            });
+        }
+        
+        public void FadeOut(Action callBack, float time)
+        {
+            fade.DOFade(0f, time).OnComplete(delegate
+            {
+                if(callBack != null) callBack.Invoke();
+                fade.raycastTarget = false;
+            });
         }
 
         public void Lose()

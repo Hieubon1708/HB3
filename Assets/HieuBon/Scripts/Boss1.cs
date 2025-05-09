@@ -54,7 +54,7 @@ namespace HieuBon
 
             weapon.Attack(poppy.transform);
 
-            AudioController.instance.PlaySoundNVibrate(name.Contains("Swat") ? AudioController.instance.ak47Gun : AudioController.instance.laserGun, 0);
+            AudioController.instance.PlaySoundNVibrate(AudioController.instance.ak47Gun, 0);
 
             if (isChase)
             {
@@ -80,7 +80,7 @@ namespace HieuBon
 
                     Vector3 dir = (transform.forward * Cosine) + (transform.right * Sine);
 
-                    bulletGliders[indexBulletGlider].Init(damage, "Player", 5, 0, startBullet.position, startBullet.position + dir * 5);
+                    bulletGliders[indexBulletGlider].Init(damage, "Player", bulletSpeed, 0, startBullet.position, startBullet.position + dir * 5);
 
                     indexBulletGlider++;
                     if (indexBulletGlider == bulletGliders.Length) indexBulletGlider = 0;
@@ -89,7 +89,7 @@ namespace HieuBon
                 }
             }
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
 
             StopAttack();
         }
